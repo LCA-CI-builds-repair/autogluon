@@ -753,6 +753,42 @@ COD_METRICS_NAMES = {"sm": SM(), "fm": FM(), "em": EM(), "mae": MAE()}
 class Multiclass_IoU_Pred:
     """
     Compute the IoU for multi-class semantic segmentation based on https://github.com/xieenze/Trans2Seg/blob/master/segmentron/utils/score.py.
+    """
+    def __init__(self, num_classes):
+        self.num_classes = num_classes
+
+    def to_tensor(self, img, dtype=torch.float32):
+        """
+        Convert image to tensor.
+        """
+        return torch.from_numpy(img).to(dtype)
+
+    def to_one_hot(self, img, num_classes):
+        """
+        Convert image to one-hot format.
+        """
+        return torch.from_numpy(img).to(dtype)
+
+    def __call__(self, pred, target, mask=None):
+        """
+        Compute IoU for multi-class semantic segmentation.
+        """
+        # Make predictions and targets torch tensors
+        pred = self.to_tensor(pred)
+        target = self.to_tensor(target)
+
+        # Compute IoU
+        ious = []
+        for c in range(self.num_classes):
+            pred_c = pred[:, c]
+            target_c = target[:, c]
+            intersection = (pred_c * target_c).sum()
+            union = (pred_c + target_c).sum()
+            iou = intersection / union
+            ious.append(iou)
+
+        return ious
+
     The direct use of torchmetrics for large dataset will lead to issues such as high CPU usage or insufficient memory.
     """
 
