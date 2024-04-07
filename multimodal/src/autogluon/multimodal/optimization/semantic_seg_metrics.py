@@ -746,7 +746,7 @@ class MAE(COD):
         return torch.tensor(metric_MAE.get_results()["mae"])
 
 
-COD_METRICS_NAMES = {"sm": SM(), "fm": FM(), "em": EM(), "mae": MAE()}
+CODE_METRICS_NAMES = {"sm": SM(), "fm": FM(), "em": EM(), "mae": MAE()}
 
 
 # TODO: Modify multi-gpu evalution error. Maybe there will be a more elegant way.
