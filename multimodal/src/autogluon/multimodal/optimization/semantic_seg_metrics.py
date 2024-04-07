@@ -746,10 +746,10 @@ class MAE(COD):
         return torch.tensor(metric_MAE.get_results()["mae"])
 
 
-COD_METRICS_NAMES = {"sm": SM(), "fm": FM(), "em": EM(), "mae": MAE()}
+COD_METRICS_NAMES = {"sm": SM(), "fm": FM(), "em": EM(), "mae": MAE(), "ci": CI()}
 
 
-# TODO: Modify multi-gpu evalution error. Maybe there will be a more elegant way.
+# TODO: Modify multi-gpu evaluation error. Maybe there will be a more elegant way.
 class Multiclass_IoU_Pred:
     """
     Compute the IoU for multi-class semantic segmentation based on https://github.com/xieenze/Trans2Seg/blob/master/segmentron/utils/score.py.
