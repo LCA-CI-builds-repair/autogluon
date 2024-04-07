@@ -33,10 +33,10 @@ install_requires = [
     "networkx",  # version range defined in `core/_setup_utils.py`
     # TODO: update statsforecast to v1.5.0 - resolve antlr4-python3-runtime dependency clash with multimodal
     "statsforecast>=1.4.0,<1.5",
-    "mlforecast>=0.10.0,<0.10.1",
-    "utilsforecast>=0.0.10,<0.0.11",
+    "mlforecast==0.10.0",
+    "utilsforecast==0.0.10",
     "tqdm",  # version range defined in `core/_setup_utils.py`
-    "orjson~=3.9",  # use faster JSON implemention in GluonTS
+    "orjson==3.9",  # use faster JSON implemention in GluonTS
     f"autogluon.core[raytune]=={version}",
     f"autogluon.common=={version}",
     f"autogluon.tabular[catboost,lightgbm,xgboost]=={version}",
