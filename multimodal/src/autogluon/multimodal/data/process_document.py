@@ -8,7 +8,12 @@ import numpy as np
 import PIL
 import pytesseract
 import torch
-from nptyping import NDArray
+from nptyping im        words = list(ocr_df.text)
+        words = [str(w) for w in words]
+        coordinates = ocr_df[["left", "top", "width", "height"]]
+        actual_boxes = []
+        for idx, row in coordinates.iterrows():
+            # the row comes in (left, top, width, height) format.DArray
 from PIL import ImageFile
 from torch import nn
 from torchvision import transforms

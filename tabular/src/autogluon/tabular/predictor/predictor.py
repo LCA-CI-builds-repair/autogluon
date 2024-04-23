@@ -9,9 +9,9 @@ import pprint
 import shutil
 import time
 import warnings
-from typing import List, Optional, Tuple, Union
-
-import networkx as nx
+from typing import List, Optional, Tuple, UnioFor multiclass problems, this list contains the class labels in sorted order of `predict_proba()` output.
+For binary problems, this list contains the class labels in sorted order of `predict_proba(as_multiclass=True)` output.
+`class_labels[0]` corresponds to the internal label = 0 (negative class), `class_labels[1]` corresponds to the internal label = 1 (positive class).import networkx as nx
 import numpy as np
 import pandas as pd
 

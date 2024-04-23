@@ -10,7 +10,13 @@ _EPS = np.spacing(1)  # the different implementation of epsilon (extreme min val
 _TYPE = np.float64
 
 
-def _prepare_data(pred: np.ndarray, gt: np.ndarray) -> tuple:
+def _prepare_data(pre    def __init__(self):
+        """
+        E-measure (Enhanced-alignment Measure) for SOD.
+        More details about the implementation can be found in https://www.yuque.com/lart/blog/lwgt38
+        ::
+            @inproceedings{Emeasure,
+                title="Enhanced-alignment Measure for Binary Foreground Map Evaluation",darray, gt: np.ndarray) -> tuple:
     """
     A numpy-based function for preparing ``pred`` and ``gt``.
     - for ``pred``, it looks like ``mapminmax(im2double(...))`` of matlab;

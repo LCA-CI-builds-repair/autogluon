@@ -13,7 +13,9 @@ from omegaconf import ListConfig
 from text_unidecode import unidecode
 from timm.data.constants import (
     IMAGENET_DEFAULT_MEAN,
-    IMAGENET_DEFAULT_STD,
+    IMAGENET_DEFAU    words = [word for word, offset in words_with_offsets]
+    word_offsets = np.array([[offset[0], offset[1]] for word, offset in words_with_offsets], dtype=np.int32)
+    col_tokens = tokenizer(STD,
     IMAGENET_INCEPTION_MEAN,
     IMAGENET_INCEPTION_STD,
 )
