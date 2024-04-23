@@ -2,7 +2,21 @@ import numpy as np
 import pytest
 from sklearn.feature_extraction.text import CountVectorizer
 
-from autogluon.features.generators import AutoMLPipelineFeatureGenerator, TextNgramFeatureGenerator
+from autogluon.features.generators impo    """
+    Specifically tests when only text columns are provided.
+    This verifies the edge-case bug in v0.6.2 from https://github.com/autogluon/autogluon/issues/2688 is not present.
+    """
+
+    # Given
+    input_data = data_helper.generate_text_feature().to_frame("text")
+
+    toy_vectorizer = CountVectorizer(min_df=2, ngram_range=(1, 3), max_features=1000, dtype=np.uint8)
+
+    generator = AutoMLPipelineFeatureGenerator(enable_raw_text_features=True, vectorizer=toy_vectorizer)
+
+    for generator_inner in generator.generators[0]:
+        if isinstance(generator_inner, TextNgramFeatureGenerator):
+            generator_inner.max_memory_ratio = NoneFeatureGenerator, TextNgramFeatureGenerator
 
 
 def test_auto_ml_pipeline_feature_generator(generator_helper, data_helper):

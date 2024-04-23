@@ -5,7 +5,13 @@ import numpy as np
 
 class InferenceSessionWrapper:
     """
-    Wrap around InferenceSession in onnxruntime, since it cannot be pickled.
+    Wrap around Inferen        initial_type = [("float_input", FloatTensorType(input_shape)]
+
+        # Without ZipMap
+        # See http://onnx.ai/sklearn-onnx/auto_examples/plot_convert_zipmap.html#without-zipmap
+        options = {}
+        if isinstance(model, (RandomForestClassifier, ExtraTreesClassifier)):
+            options[id(model)] = {"zipmap": False}on in onnxruntime, since it cannot be pickled.
     See https://github.com/microsoft/onnxruntime/issues/10097
     """
 
