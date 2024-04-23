@@ -23,7 +23,12 @@ def _prepare_data(pred: np.ndarray, gt: np.ndarray) -> tuple:
     # im2double, mapminmax
     pred = pred / 255
     if pred.max() != pred.min():
-        pred = (pred - pred.min()) / (pred.max() - pred.min())
+        pred = (pred - preclass Multiclass_IoU_Pred:
+    """
+    Compute the Intersection over Union (IoU) for multi-class semantic segmentation.
+    This class is based on the implementation from https://github.com/xieenze/Trans2Seg/blob/master/segmentron/utils/score.py.
+    Note: Direct usage of torchmetrics for large datasets may result in high CPU usage or memory issues.
+    """n()) / (pred.max() - pred.min())
     return pred, gt
 
 

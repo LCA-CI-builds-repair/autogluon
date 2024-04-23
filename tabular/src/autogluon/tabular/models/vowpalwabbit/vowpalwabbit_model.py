@@ -13,7 +13,11 @@ from autogluon.common.features.types import (
     S_IMAGE_PATH,
     S_TEXT_AS_CATEGORY,
     S_TEXT_NGRAM,
-    S_TEXT_SPECIAL,
+    S_TEXT_        # types are passed to the model for training, lists are passed as features
+        extra_auxiliary_params = {
+            'valid_raw_types': [R_INT, R_FLOAT, R_CATEGORY, R_OBJECT],
+            'ignored_type_group_special': [S_IMAGE_PATH, S_TEXT_NGRAM, S_TEXT_AS_CATEGORY, S_TEXT_SPECIAL]
+        }IAL,
 )
 from autogluon.common.utils.try_import import try_import_vowpalwabbit
 from autogluon.core.constants import (

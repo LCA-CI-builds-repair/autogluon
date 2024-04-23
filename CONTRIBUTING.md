@@ -1,6 +1,9 @@
 # Contributing Guidelines
 
-Thank you for your interest in contributing to our project. Whether it's a bug report, new feature, correction, or additional
+Thank yo4. Commit to your fork using clear commit messages.
+5. Send us a pull request, answering any default questions in the pull request interface.
+6. Pay attention to any automated CI failures reported in the pull request, and stay involved in the conversation.
+7. To spin up the platform tests, which test AutoGluon on macOS and Windows, comment on the PR with `/platform_tests` (You would need write permission to the AutoGluon repo). It is recommended to run the platform tests only after you have passed the default CI.r your interest in contributing to our project. Whether it's a bug report, new feature, correction, or additional
 documentation, we greatly value feedback and contributions from our community.
 
 Please read through this document before submitting any issues or pull requests to ensure we have all the necessary
