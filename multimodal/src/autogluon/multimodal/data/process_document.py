@@ -13,7 +13,19 @@ from PIL import ImageFile
 from torch import nn
 from torchvision import transforms
 
-from ..constants import AUTOMM, BBOX, DOCUMENT_PDF
+frtry:
+    raise e
+except SpecificException as specific_e:
+    if self.missing_value_strategy.lower() == "zero":
+        logger.debug(f"Using a zero image due to '{specific_e}'")
+        doc_image = PIL.Image.new(image_mode, (self.size, self.size), color=0)
+        doc_image = doc_image.convert(image_mode)
+        words = ""  # empty words
+        normalized_word_boxes = [self.pad_token_box]
+    else:
+        raise specific_e
+except Exception as e:
+    raise eants import AUTOMM, BBOX, DOCUMENT_PDF
 from .collator import PadCollator, StackCollator
 from .utils import construct_image_processor, image_mean_std
 
