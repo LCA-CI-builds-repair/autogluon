@@ -14,7 +14,27 @@ from autogluon.common import space
 from autogluon.common.utils.resource_utils import ResourceManager
 from autogluon.common.utils.s3_utils import is_s3_url
 
-from ..ray.resources_calculator import ResourceCalculator
+from ..rayimport os
+
+# TODO: remove this when ray tune fix ray tune pass tuple to hyperopt issue
+os.environ["TUNE_DISABLE_AUTO_CALLBACK_LOGGERS"] = "1"
+analysis = run(
+    trainable=model_trial,
+    trainable_args=train_fn_kwargs,
+    search_space=self.search_space,
+    hyperparameter_tune_kwargs=self.hyperparameter_tune_kwargs,
+    metric="validation_performance",
+    mode="max",
+    save_dir=directory,
+    ray_tune_adapter=RayTuneAdapterFactory.get_adapter(adapter_type)(),
+    trainable_is_parallel=trainable_is_parallel,
+    total_resources=self.resources,
+    minimum_cpu_per_trial=minimum_cpu_per_trial,
+    minimum_gpu_per_trial=minimum_gpu_per_trial,
+    model_estimate_memory_usage=model_estimate_memory_usage,
+    time_budget_s=self.time_limit,
+    verbose=0,
+)tor import ResourceCalculator
 from ..scheduler.scheduler_factory import scheduler_factory
 from ..utils.savers import save_pkl
 from .constants import CUSTOM_BACKEND, RAY_BACKEND

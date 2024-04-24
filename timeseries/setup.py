@@ -1,5 +1,24 @@
-#!/usr/bin/env python
-import importlib.util
+#!/usr/bin/env pythoninstall_requires = [
+    # version ranges added in ag.get_dependency_version_ranges()
+    "joblib>=1.1,<2",
+    "numpy",  # version range defined in `core/_setup_utils.py`
+    "scipy",  # version range defined in `core/_setup_utils.py`
+    "pandas",  # version range defined in `core/_setup_utils.py`
+    "torch",  # version range defined in `core/_setup_utils.py`
+    "lightning",  # version range defined in `core/_setup_utils.py`
+    "pytorch_lightning",  # version range defined in `core/_setup_utils.py`
+    "statsmodels>=0.13.0,<0.15",
+    "gluonts>=0.14.0,<0.15",
+    "networkx",  # version range defined in `core/_setup_utils.py`
+    "statsforecast>=1.5.0,<1.6",  # update to resolve dependency clash with multimodal
+    "mlforecast>=0.10.0,<0.10.1",
+    "utilsforecast>=0.0.10,<0.0.11",
+    "tqdm",  # version range defined in `core/_setup_utils.py`
+    "orjson~=3.9",  # use faster JSON implemention in GluonTS
+    f"autogluon.core[raytune]=={version}",
+    f"autogluon.common=={version}",
+    f"autogluon.tabular[catboost,lightgbm,xgboost]=={version}",
+]
 
 ###########################
 # This code block is a HACK (!), but is necessary to avoid code duplication. Do NOT alter these lines.

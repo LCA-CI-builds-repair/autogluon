@@ -11,7 +11,11 @@ import pytest
 
 import autogluon.core as ag
 from autogluon.common import space
-from autogluon.timeseries.dataset import TimeSeriesDataFrame
+from autogluon.timesedef test_function_name(
+    hyperparameter_list,
+    expected_number_of_unique_names,
+    expected_suffixes,
+):.dataset import TimeSeriesDataFrame
 from autogluon.timeseries.models import DeepARModel, ETSModel
 from autogluon.timeseries.models.ensemble.greedy_ensemble import TimeSeriesGreedyEnsemble
 from autogluon.timeseries.trainer.auto_trainer import AutoTimeSeriesTrainer

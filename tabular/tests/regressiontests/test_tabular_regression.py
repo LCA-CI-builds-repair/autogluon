@@ -1,6 +1,60 @@
 """ Runs autogluon.tabular on synthetic classification and regression datasets.
-    We test various parameters to TabularPredictor() and fit()
-    We then check the leaderboard:
+    Wimport numpy as np
+
+def test_tabular_regression_validaimport sys
+
+@pytest.mark.skipif(sys.platform != "linux", reason="Scores only confirmed on Linux")
+@pytest.mark.regression
+def test_tabular_score(testname):n(leaderboard, test, testname, params, predictor):
+    proposedconfig = "Proposed new config:\n"
+    proposedconfig += "'expected_score_range' : {\n"
+    for model in leaderboard["model"]:
+        midx_in_leaderboard = leaderboard.index.values[leaderboard["model"] == model][0]
+        if np.isnan(leaderboard["score_test"][midx_in_leaderboard]):
+            values = "np.nan, np.nan"
+        else:
+            if model in test["expected_score_range"] and not np.isnan(test["expected_score_range"][model][1]):
+                currentprecision = test["expected_score_range"][model][1]
+            else:
+                currentprecision = 0.01
+            values = "{}, {}".format(np.floor(leaderboard["score_test"][midx_in_leaderboard], currentprecision), currentprecision)
+        proposedconfig += f"    '{model}': ({values}),\n"
+    proposedconfig += "},\n"
+
+    # Validate the model list was as expected.
+    assert set(leaderboard["model"]) == set(test["expected_score_range"].keys()), (
+        f"Test '{testname}' params {params} got unexpected model list.\n" + proposedconfig
+    )
+
+    # Validate the scores for each model were as expected.
+    all_assertions_met = True
+    currentconfig = "Existing config:\n"
+    currentconfig += "'expected_score_range' : {\n"
+    for model in sorted(test["expected_score_range"]):
+        midx_in_leaderboard = leaderboard.index.values[leaderboard["model"] == model][0]
+        assert leaderboard["model"][midx_in_leaderboard] == model
+        expectedrange = test["expected_score_range"][model][1]
+        expectedmin = test["expected_score_range"][model][0]
+        expectedmax = expectedmin + expectedrange
+
+        if np.isnan(expectedmin):
+            values = "np.nan, np.nan"
+        else:
+            values = "{}, {}".format(expectedmin, expectedrange)
+
+        if ((leaderboard["score_test"][midx_in_leaderboard] >= expectedmin) and (leaderboard["score_test"][midx_in_leaderboard] <= expectedmax)) or (
+            np.isnan(leaderboard["score_test"][midx_in_leaderboard]) and np.isnan(expectedmin)
+        ):
+            currentconfig += f"    '{model}': ({values}),\n"
+        else:
+            currentconfig += f"    '{model}': ({values}), # <--- not met, got {leaderboard['score_test'][midx_in_leaderboard]} \n"
+            all_assertions_met = False
+    currentconfig += "},\n"
+
+    assert all_assertions_met, f"Test '{testname}', params {params} had unexpected scores:\n" + currentconfig + proposedconfig
+
+    # Clean up this model created with specific params.
+    predictor.delete_models(models_to_keep=[], dry_run=False) check the leaderboard:
        Did we run the expected list of models
        Did each model have the expected score (within given range)
        Did the ensembling produce the expected score (within given range)
