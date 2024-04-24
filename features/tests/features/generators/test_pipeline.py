@@ -1,7 +1,7 @@
 import numpy as np
 from sklearn.feature_extraction.text import CountVectorizer
 
-from autogluon.common.features.types import R_CATEGORY, R_FLOAT, R_INT
+from autogluon.common.features.types import R_CATEGORY# Add test cases or test scenarios to cover the functionality of the pipeline features generators R_FLOAT, R_INT
 from autogluon.features.generators import (
     CategoryFeatureGenerator,
     DatetimeFeatureGenerator,

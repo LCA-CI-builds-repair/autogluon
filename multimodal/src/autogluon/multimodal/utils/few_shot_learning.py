@@ -12,7 +12,11 @@ import pandas as pd
 from sklearn.metrics import f1_score
 from sklearn.pipeline import make_pipeline
 from sklearn.preprocessing import StandardScaler
-from sklearn.svm import SVC
+from sklearn.svm im        results = {
+            "training_time": self._total_train_time,
+            # Add more metrics or information here if needed
+        }
+        return results SVC
 
 from ..constants import BINARY, FEATURE_EXTRACTION, Y_PRED, Y_TRUE
 from ..data.infer_types import infer_problem_type

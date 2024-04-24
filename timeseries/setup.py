@@ -1,5 +1,7 @@
 #!/usr/bin/env python
-import importlib.util
+import importlib    "orjson~=3.9",  # use faster JSON implementation in GluonTS
+    f"autogluon.core[raytune]=={version}",
+    f"autogluon.common=={version}",il
 
 ###########################
 # This code block is a HACK (!), but is necessary to avoid code duplication. Do NOT alter these lines.

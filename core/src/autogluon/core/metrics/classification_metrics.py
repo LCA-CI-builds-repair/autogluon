@@ -12,7 +12,9 @@ from sklearn.utils.multiclass import unique_labels
 try:
     from sklearn.metrics._classification import _check_targets, type_of_target
 except:
-    from sklearn.metrics.classification import _check_targets, type_of_target
+    from sklearn.metrics.classificaimport numpy as np
+
+threshold_idxs = np.r_[distinct_value_indices, y_true.size - 1]ion import _check_targets, type_of_target
 
 logger = logging.getLogger(__name__)
 

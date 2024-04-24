@@ -14,7 +14,12 @@ from autogluon.common import space
 from autogluon.common.utils.resource_utils import ResourceManager
 from autogluon.common.utils.s3_utils import is_s3_url
 
-from ..ray.resources_calculator import ResourceCalculator
+from ..ray.import os
+
+try:
+    os.environ["TUNE_DISABLE_AUTO_CALLBACK_LOGGERS"] = "1"
+except Exception as e:
+    print(f"Error setting environment variable: {e}")esources_calculator import ResourceCalculator
 from ..scheduler.scheduler_factory import scheduler_factory
 from ..utils.savers import save_pkl
 from .constants import CUSTOM_BACKEND, RAY_BACKEND

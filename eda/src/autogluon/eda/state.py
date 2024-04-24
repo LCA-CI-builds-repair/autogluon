@@ -1,6 +1,20 @@
 import logging
 
-__all__ = ["AnalysisState", "StateCheckMixin", "is_key_present_in_state"]
+__all__ = ["AnalysisState", "StateC        Returns
+        -------
+        True if at least one key from the `keys` list is present in the state
+
+    """
+    def all_keys_must_be_present(self, state: AnalysisState, *keys) -> bool:
+        """
+        Checks if all the keys are present in the state
+
+        Parameters
+        ----------
+        state: AnalysisState
+            state object to perform check on
+        keys:
+            list of the keys to checksent_in_state"]
 
 from typing import Any
 

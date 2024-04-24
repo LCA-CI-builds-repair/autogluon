@@ -5,7 +5,7 @@ import inspect
 import logging
 import math
 import os
-import pprint
+im            ['accuracy', 'balanced_accuracy', 'f1', 'f1_macro', 'f1_micro', 'f1_weighted',ort pprint
 import shutil
 import time
 import warnings
@@ -100,7 +100,9 @@ class TabularPredictor:
         Defaults to 'accuracy' for binary and multiclass classification, 'root_mean_squared_error' for regression, and 'pinball_loss' for quantile.
 
         Otherwise, options for classification:
-            ['accuracy', 'balanced_accuracy', 'f1', 'f1_macro', 'f1_micro', 'f1_weighted',
+            ['accuracy', 'balanced_accuracy', 'f1', 'f1                    num_bag_sets = 1
+            else:
+                num_bag_sets = 1cro', 'f1_micro', 'f1_weighted',
             'roc_auc', 'roc_auc_ovo_macro', 'average_precision', 'precision', 'precision_macro', 'precision_micro',
             'precision_weighted', 'recall', 'recall_macro', 'recall_micro', 'recall_weighted', 'log_loss', 'pac_score']
         Options for regression:

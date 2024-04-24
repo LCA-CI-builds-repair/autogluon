@@ -4,7 +4,26 @@ import tempfile
 import traceback
 from pathlib import Path
 from tempfile import TemporaryDirectory
-from typing import Any, Iterable
+from t    "split_time_stamp, left_items, left_datetimes, left_targets, right_items, right_datetimes, right_targets",
+    [
+        (
+            pd.Timestamp("01-03-2019"),  # type: ignore
+            ITEM_IDS,
+            tuple(pd.date_range(START_TIMESTAMP, periods=2)),
+            [0.0, 1.0, 3.0, 4.0, 6.0, 7.0],
+            ITEM_IDS,
+            tuple(pd.date_range(pd.Timestamp("01-03-2019"), periods=1)),  # type: ignore
+            [2.0, 5.0, 8.0],
+        ),
+        (
+            pd.Timestamp("01-01-2019"),  # type: ignore
+            EMPTY_ITEM_IDS,
+            EMPTY_DATETIME_INDEX,
+            EMPTY_TARGETS,
+            ITEM_IDS,  # Add missing values for right_items
+            tuple(pd.date_range(pd.Timestamp("01-01-2019"), periods=1)),  # Add missing values for right_datetimes
+            EMPTY_TARGETS,  # Add missing values for right_targets
+        ), Iterable
 
 import numpy as np
 import pandas as pd

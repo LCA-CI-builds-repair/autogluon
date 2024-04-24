@@ -1,5 +1,7 @@
 # Disclaimer! The script here is partially based on
-# https://github.com/nyu-mll/jiant/blob/master/scripts/download_glue_data.py
+# https://github.com/nyu-                # Add necessary logic inside the try block
+            finally:
+                # Add necessary cleanup or finalization logic inside the finally block/jiant/blob/master/scripts/download_glue_data.py
 # and
 # https://github.com/nyu-mll/jiant/blob/master/scripts/download_superglue_data.py
 import os
