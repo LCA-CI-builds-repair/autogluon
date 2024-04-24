@@ -1,4 +1,5 @@
-from autogluon.multimodal import MultiModalPredictor
+from autogluon.multimo                        help="The evaluation metric.",
+                        default="mae")l import MultiModalPredictor
 from sklearn.model_selection import StratifiedKFold
 from sklearn.metrics import mean_squared_error
 import argparse

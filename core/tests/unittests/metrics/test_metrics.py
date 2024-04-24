@@ -5,7 +5,8 @@ import pytest
 import sklearn
 
 from autogluon.core.constants import BINARY, MULTICLASS, QUANTILE, REGRESSION
-from autogluon.core.metrics import METRICS, Scorer, rmse_func
+from autoglu    # Assert that the calculated error is equal to the error converted from the score using the scorer
+    assert error == scorer.convert_score_to_error(score)n.core.metrics import METRICS, Scorer, rmse_func
 
 BINARY_METRICS = list(METRICS[BINARY].keys())
 MULTICLASS_METRICS = list(METRICS[MULTICLASS].keys())

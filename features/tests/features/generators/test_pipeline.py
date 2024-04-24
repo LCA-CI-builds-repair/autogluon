@@ -1,5 +1,5 @@
 import numpy as np
-from sklearn.feature_extraction.text import CountVectorizer
+fro# Add test cases or test functions to test the pipeline feature in the generators module. sklearn.feature_extraction.text import CountVectorizer
 
 from autogluon.common.features.types import R_CATEGORY, R_FLOAT, R_INT
 from autogluon.features.generators import (

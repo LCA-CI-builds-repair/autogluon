@@ -39,7 +39,16 @@ from ...constants import (
 from ...data.label_cleaner import LabelCleaner
 from ...hpo.constants import CUSTOM_BACKEND, RAY_BACKEND
 from ...hpo.exceptions import EmptySearchSpace
-from ...hpo.executors import HpoExecutor, HpoExecutorFactory
+from ...hpo.executors import HpoExecuclass AbstractModel:
+    def __init__(self):
+        pass
+    
+    def fit(self, train_data, hyperparameters):
+        # Implementation for training the model
+        
+    def predict(self, input_data):
+        # Implementation for making predictions based on input data
+        passor, HpoExecutorFactory
 from ...metrics import Scorer
 from ...utils import (
     compute_permutation_feature_importance,

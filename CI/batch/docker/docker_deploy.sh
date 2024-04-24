@@ -1,4 +1,5 @@
-#!/bin/bash
+## Asaws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin <YOUR_AWS_ACCOUNT_ID>.dkr.ecr.us-east-1.amazonaws.comign the value of the first argument provided to the variable TYPE
+TYPE=$1bin/bash
 
 TYPE=$1
 

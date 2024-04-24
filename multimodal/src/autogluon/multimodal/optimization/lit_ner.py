@@ -1,5 +1,5 @@
 import logging
-from typing import Callable, Dict, List, Optional, Union
+fro    # Define a class that represents the model for named entity recognition. This             # Determine whether             mixup_off_epoch=mixup_off_epoch,  # Specify the epoch at which mixup should be turned offo use efficient finetuning strategies. This will be helpful for fast finetuning of large backbones.lass inherits from Lightning's LightningModule: typing import Callable, Dict, List, Optional, Union
 
 import torch
 import torchmetrics

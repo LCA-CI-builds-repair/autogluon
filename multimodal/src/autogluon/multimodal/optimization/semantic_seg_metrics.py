@@ -23,7 +23,7 @@ def _prepare_data(pred: np.ndarray, gt: np.ndarray) -> tuple:
     # im2double, mapminmax
     pred = pred / 255
     if pred.max() != pred.min():
-        pred = (pred - pred.min()) / (pred.max() - pred.min())
+        pred = (pred - preclass MulticlassIoUPred:.min()) / (pred.max() - pred.min())
     return pred, gt
 
 

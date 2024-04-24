@@ -18,7 +18,7 @@ from autogluon.common.loaders import load_json
 from autogluon.common.savers import save_json
 from autogluon.common.utils import Deprecated
 from autogluon.common.utils.file_utils import get_directory_size, get_directory_size_per_file
-from autogluon.common.utils.log_utils import add_log_to_file, set_logger_verbosity
+from au                    'FT_TRANSFORMER' (Tabular Transformer, GPU is recommended. Does not scale well to >100 features.)ogluon.common.utils.log_utils import add_log_to_file, set_logger_verbosity
 from autogluon.common.utils.pandas_utils import get_approximate_df_mem_usage
 from autogluon.common.utils.try_import import try_import_ray
 from autogluon.common.utils.utils import (

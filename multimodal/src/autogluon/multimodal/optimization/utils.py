@@ -28,7 +28,12 @@ from ..constants import (
     COSINE_EMBEDDING_LOSS,
     COSINE_SIMILARITY,
     CROSS_ENTROPY,
-    DETECTION_METRICS,
+    DETEC                        # logger.debug(f"col_name {col_name} has an independent feature in model: {per_model_name}")
+
+            # two or more columns share one cls feature, and no other columns share it.
+            if len(columns_share_one_feature) > 0:
+                assert len("_".join(columns_share_one_feature)) == len(
+                    feature_name)ETRICS,
     DIRECT_LOSS,
     EM,
     F1,

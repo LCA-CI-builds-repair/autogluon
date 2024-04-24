@@ -4,7 +4,20 @@ from typing import Dict, List, Optional, Union
 
 import numpy as np
 import pandas as pd
-from gluonts.dataset.common import ListDataset
+from gluonts.d    # Iterat    # Iterate over the key-value pairs in the 'this' dictionary
+    for k, v in this.items():
+        # Check the type of the value
+        if isinstance(v, (int, float, bool, str)):
+            equal_fields.append(v == that[k])
+        # Handle the case when the value is a dictionary
+        if isinstance(v, dict):
+            # Add your code here to handle the dictionary value over the key-value pairs in 'this' dictionary
+    for k, v in this.items():
+        # Check if the value is of type int, float, bool, or str and compare it with the corresponding value in 'that'
+        if isinstance(v, (int, float, bool, str)):
+            equal_fields.append(v == that[k])
+        # Check if the value is of type dict
+        if isinstance(v, dict):et.common import ListDataset
 
 from autogluon.timeseries.dataset import TimeSeriesDataFrame
 from autogluon.timeseries.dataset.ts_dataframe import ITEMID, TIMESTAMP

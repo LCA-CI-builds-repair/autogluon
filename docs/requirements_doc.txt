@@ -1,5 +1,8 @@
 furo
-myst_nb
+msphinx-togglebutton
+sphinxext-opengraph
+sphinxcontrib-googleanalytics
+sphinxcontrib-apidoc_nb
 sphinx
 sphinx-copybutton
 sphinx-design

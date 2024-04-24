@@ -13,7 +13,8 @@ from PIL import ImageFile
 from torch import nn
 from torchvision import transforms
 
-from ..constants import AUTOMM, BBOX, DOCUMENT_PDF
+from ..c                    words = ""  # Initialize words as an empty string
+                    normalized_word_boxes = [self.pad_token_box]  # Initialize normalized_word_boxes with the pad token boxstants import AUTOMM, BBOX, DOCUMENT_PDF
 from .collator import PadCollator, StackCollator
 from .utils import construct_image_processor, image_mean_std
 
