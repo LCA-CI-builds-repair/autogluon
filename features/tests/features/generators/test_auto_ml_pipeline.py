@@ -2,7 +2,47 @@ import numpy as np
 import pytest
 from sklearn.feature_extraction.text import CountVectorizer
 
-from autogluon.features.generators import AutoMLPipelineFeatureGenerator, TextNgramFeatureGenerator
+from autogluon.features.generators import AutoMLPipelineFeatureGenerator, import pytest
+import numpy as np
+from autogluon.tabular.features.generators.auto_ml_pipeline_feimport pytest
+from sklearn.feature_extraction.text import CountVectorizer
+from autogluon.tabular.features.generators.auto_ml_pipeline_feature_generator import AutoMLPipelineFeatureGenerator
+from autogluon.tabular.features.generators.text_specials import TextNgramFeatureGenerator
+
+def test_auto_ml_pipeline_feature_generator_duplicates(generator_helper, data_helper):
+    """
+    Test the most complicated situation: Many duplicate features, useless features, and all dtypes at once
+    This test ensures the fix in https://github.com/autogluon/autogluon/pull/2986 works, test failed prior to fix
+    """
+    # Given
+    input_data = data_helper.generate_duplicate()
+
+    toy_vectorizer = CountVectorizer(min_df=2, ngram_range=(1, 3), max_features=1000, dtype=np.uint8)
+
+    # Instantiate AutoMLPipelineFeatureGenerator with the vectorizer and post_drop_duplicates parameters
+    with pytest.raises(KeyError):
+        AutoMLPipelineFeatureGenerator(generators=[], vectorizer=toy_vectorizer, post_drop_duplicates=False)
+
+    generator = AutoMLPipelineFeatureGenerator(vectorizer=toy_vectorizer, post_drop_duplicates=False)
+
+    for generator_stage in generator.generators:
+        for generator_inner in generator_stage:
+            if isinstance(generator_inner, TextNgramFeatureGenerator):
+                # Necessary in test to avoid CI non-deterministically pruning ngram counts.
+                generator_inner.max_memory_ratio = Noneport AutoMLPipelineFeatureGenerator
+
+def test_auto_ml_pipeline_feature_generator_duplicates(generator_helper, data_helper):
+    """
+    Test the most complicated situation: Many duplicate features, useless features, and all dtypes at once
+    This test ensures the fix in https://github.com/autogluon/autogluon/pull/2986 works, test failed prior to fix
+    """
+    # Given
+    input_data = data_helper.generate_duplicate()
+
+    toy_vectorizer = CountVectorizer(min_df=2, ngram_range=(1, 3), max_features=1000, dtype=np.uint8)
+
+    # Instantiate AutoMLPipelineFeatureGenerator with the vectorizer parameter
+    generator = AutoMLPipelineFeatureGenerator(vectorizer=toy_vectorizer)enerator
 
 
 def test_auto_ml_pipeline_feature_generator(generator_helper, data_helper):

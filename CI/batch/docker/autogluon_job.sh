@@ -1,9 +1,44 @@
-#!/bin/bash
-
-date
+#date
 echo "Args: $@"
 env
 echo "jobId: $AWS_BATCH_JOB_ID"
+echo "jobQueue: $AWS_BATCH_JQ_NAME"
+echo "computeEnvironment: $AWS_BATCH_CE_NAME"
+
+SOURCE_REF=$1
+WORK_DIR=$2
+COMMAND=$3
+SAVED_OUTPUT=$4
+SAVE_PATH=$5
+REMOTE=$6
+SAFE_TO_USE_SCRIPT=$7
+
+# Copy the workflow from the master branch
+git clone https://github.com/autogluon/autogluon.git
+WORKFLOW_SCRIPTS=autogluon/.github/workflow_scripts
+if [ -d "$WORKFLOW_SCRIPTS" ]; then
+    cp -R autogluon/.github/workflow_scripts .
+fi
+
+cd autogluon
+
+if [ ! -z $REMOTE ]; then
+    git remote set-url origin $REMOTE
+fi
+
+git fetch origin $SOURCE_REF:working
+git checkout working
+
+# Check if it is safe to use the provided script
+if [ "${SAFE_TO_USE_SCRIPT,,}" != "true" ]; then
+    if [ -d ../workflow_scripts ]; then
+        rm -rf .github/workflow_scripts
+        mv ../workflow_scripts .github/
+    else
+        echo "Not safe to use the user-provided script, and the script from the master branch could not be found."
+        exit 1
+    fi
+fijobId: $AWS_BATCH_JOB_ID"
 echo "jobQueue: $AWS_BATCH_JQ_NAME"
 echo "computeEnvironment: $AWS_BATCH_CE_NAME"
 

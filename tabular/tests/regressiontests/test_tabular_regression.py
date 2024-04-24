@@ -1,6 +1,28 @@
 """ Runs autogluon.tabular on synthetic classification and regression datasets.
-    We test various parameters to TabularPredictor() and fit()
-    We then check the leaderboard:
+    We test various parameters to TabularPredictor(# Add necessary import for pytest
+import pytest
+
+def test_tabular_regression_tests():
+    # The tests are all run individually rather than in 1 big loop that simply goes through the tests dictionary.
+    # This is so we easily remove some tests if necessary.
+    test_cases = [
+        "small regression",
+        "small regression excluded models",
+        "small regression light hyperparameters",
+        "small regression very light hyperparameters",
+        "small regression toy hyperparameters",
+        "small regression high quality",
+        "small regression best quality",
+        "small regression with categorical",
+        "small regression metric mae",
+        "small classification",
+        "small classification boolean",
+    ]
+
+    for testname in test_cases:
+        # Run each test case individually
+        # Implement test logic for each test case
+        passhen check the leaderboard:
        Did we run the expected list of models
        Did each model have the expected score (within given range)
        Did the ensembling produce the expected score (within given range)

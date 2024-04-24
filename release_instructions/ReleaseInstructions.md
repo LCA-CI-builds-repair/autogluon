@@ -2,7 +2,17 @@
 
 ## Prior to release: 1 week out
 
-* Ensure the version specified in `docs/conf.py` and `VERSION` align with the intended release version.
+* Ensure the ver* Delete the `stable` branch.
+* Create a new `stable` branch from the `0.x.y` branch (They should be identical).
+* Add and push any change in `docs/README.md` (i.e. space) to ensure the `stable` branch is different from `0.x.y`.
+  * This is required for GH Action to execute the CI continuous integration step if `0.x.y` and `stable` hashes are matching.
+* Wait for the CI build of the `stable` branch to pass.
+* Check that the website has updated to align with the release docs.
+* Perform the version release by going to https://github.com/autogluon/autogluon/releases and click 'Draft a new release' in the top right.
+  * Tag the release with the format `v0.x.y`.
+  * Name the release identically to the tag (e.g., `v0.x.y`).
+  * Select the `master` branch as a target.
+    * Note: we generally use `master` unless there are certain commits there we don't want to add to the release.ied in `docs/conf.py` and `VERSION` align with the intended release version.
 * Check all dependency version ranges.
   * Ensure all dependencies are not capped by major version, unless the reason is documented inline.
     * Example of major version cap: `scikit-learn<2`

@@ -1,5 +1,21 @@
 import numpy as np
-from sklearn.feature_extraction.text import CountVectorizer
+from sklearn.feafrom autogluon.tabular.features.generators.text_specials import TextNgramFeatureGenerator
+
+# max_memory_ratio=None in test to avoid CI reducing ngrams non-deterministically.
+generator = TextNgramFeatureGenerator(max_memory_ratio=None, vectorizer=toy_vectorizer)
+
+# When
+output_data = generator_helper.fit_transform_assert(
+    input_data=input_data,
+    generator=generator,
+    expected_feature_metadata_in_full=expected_feature_metadata_in_full,
+    expected_feature_metadata_full=expected_feature_metadata_full,
+)
+
+assert expected_output_data_feat_total == list(output_data["__nlp__._total_"].values)
+
+
+def test_text_ngram_feature_generator_categorical_nan(generator_helper, data_helper):text import CountVectorizer
 
 from autogluon.common.features.feature_metadata import FeatureMetadata
 from autogluon.features.generators import TextNgramFeatureGenerator

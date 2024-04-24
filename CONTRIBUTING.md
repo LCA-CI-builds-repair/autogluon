@@ -1,6 +1,28 @@
 # Contributing Guidelines
 
-Thank you for your interest in contributing to our project. Whether it's a bug report, new feature, correction, or additional
+Than1. Fork the repository.
+2. Focus on the specific change you are contributing without reformatting all code.
+3. Ensure local tests pass.
+4. Commit to your fork with clear commit messages.
+5. Send a pull request, answering any default questions in the pull request interface.
+6. Pay attention to any automated CI failures reported in the pull request and engage in the conversation.
+7. To run platform tests testing AutoGluon on macOS and Windows, comment on the PR with `/platform_tests` (write permission to AutoGluon repo needed). It is recommended to run platform tests only after passing the default CI.
+
+GitHub provides additional documentation on [forking a repository](https://help.github.com/articles/fork-a-repo/) and [creating a pull request](https://help.github.com/articles/creating-a-pull-request/).
+
+## Tips for Modifying the Source Code
+
+- Install the package in a fresh virtualenv following the [installation instructions](https://auto.gluon.ai/dev/install.html) and select the *Source* option.
+
+- Develop on Linux for full functionality. Avoid OS-specific changes and aim for cross-platform compatibility.
+
+- Use Python 3.8, 3.9, 3.10, or 3.11 for development.
+
+- Minimize dependencies on 3rd party packages. Consider lazy-import for new functionality.
+
+- Adhere to the [PEP8 style guide](https://www.python.org/dev/peps/pep-0008/).
+
+- After editing the code, ensure changes pass unit tests by running:our project. Whether it's a bug report, new feature, correction, or additional
 documentation, we greatly value feedback and contributions from our community.
 
 Please read through this document before submitting any issues or pull requests to ensure we have all the necessary

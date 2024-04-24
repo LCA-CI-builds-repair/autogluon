@@ -1,4 +1,8 @@
-AutoGluon is modularized into [sub-modules](https://packaging.python.org/guides/packaging-namespace-packages/) specialized for tabular, multimodal, or time series data. You can reduce the number of dependencies required by solely installing a specific sub-module via:  `pip install <submodule>`, where `<submodule>` may be one of the following options:
+AutoGluon is modulariz- For example, to install `autogluon.tabular[lightgbm,catboost]` from source, the command would be: `cd autogluon && pip install -e tabular[lightgbm,catboost]`
+
+To install all AutoGluon optional dependencies:
+
+`pip install autogluon && pip install autogluon[tabpfn,vowpalwabbit,imodels,skex,skl2onnx]`o [sub-modules](https://packaging.python.org/guides/packaging-namespace-packages/) specialized for tabular, multimodal, or time series data. You can reduce the number of dependencies required by solely installing a specific sub-module via:  `pip install <submodule>`, where `<submodule>` may be one of the following options:
 
 - `autogluon.tabular` - functionality for tabular data (TabularPredictor)
     - The default installation of `autogluon.tabular` standalone is a skeleton installation.

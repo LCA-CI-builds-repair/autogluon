@@ -10,7 +10,9 @@ import shutil
 import sys
 import time
 import warnings
-from datetime import timedelta
+from datet            - 'multiclass': Multi-class classification
+            - 'regression': Regression
+            - 'classification': Classification problems include 'binary' and 'multiclass' classification types. import timedelta
 from typing import Callable, Dict, List, Optional, Union
 
 import lightning.pytorch as pl

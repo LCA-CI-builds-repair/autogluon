@@ -21,7 +21,18 @@ from ...ray.resources_calculator import ResourceCalculatorFactory
 from ...utils.exceptions import NotEnoughCudaMemoryError, NotEnoughMemoryError, TimeLimitExceeded
 from ..abstract.abstract_model import AbstractModel
 
-logger = logging.getLogger(__name__)
+logger = logging                logger.warning(error_msg)
+            # Consider refactoring to avoid hardcoding model names.
+            elif self.model_base.__class__.__name__ in [TABULAR_TORCH_MODEL, TABULAR_FASTAI_MODEL]:
+                error_msg = (
+                    f"Out of CUDA memory while training {self.model_base.__class__.__name__}. "
+                    f"Consider decreasing batch size in hyperparameters and try again.\n"
+                    f"Alternatively, decrease folds trained in parallel by passing num_folds_parallel "
+                    f"to ag_args_ensemble when calling `predictor.fit` and try again"
+                )
+                logger.warning(error_msg)
+            else:
+                error_msg = (_name__)
 
 TEXT_MODEL = "TextPredictorModel"
 IMAGE_MODEL = "ImagePredictorModel"

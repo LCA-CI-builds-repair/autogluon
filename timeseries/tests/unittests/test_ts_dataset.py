@@ -9,7 +9,25 @@ from typing import Any, Iterable
 import numpy as np
 import pandas as pd
 import pytest
-from gluonts.dataset.common import ListDataset
+f# Import necessary function# Assuming ts_df is defined earlier in the code
+assert ts_df.freq == expected_freqfor building time series dataframe
+from utils import _build_ts_dataframe
+
+# Assuming item_ids, datetimes, and targets are defined earlier in the code# Import necessary modules
+import copy
+from time_series_dataframe import TimeSeriesDataFrame
+
+@pytest.mark.parametrize("input_df", [SAMPLE_TS_DATAFRAME, SAMPLE_TS_DATAFRAME_EMPTY])
+def test_when_dataframe_stdlib_copy_called_then_output_correct(input_df):
+    copied_df = copy.deepcopy(input_df)
+
+    assert isinstance(copied_df, TimeSeriesDataFrame)
+    assert copied_df._mgr is not input_df._mgr
+
+
+@pytest.mark.parametrize("input_df", [SAMPLE_TS_DATAFRAME, SAMPLE_TS_DATAFRAME_EMPTY])
+def test_when_dataframe_class_copy_called_then_output_correct(input_df):
+    copied_df = TimeSeriesDataFrame.copy(input_df, deep=True)s_dataframe(item_ids, datetimes, targets)om gluonts.dataset.common import ListDataset
 
 from autogluon.timeseries.dataset.ts_dataframe import (
     IRREGULAR_TIME_INDEX_FREQSTR,

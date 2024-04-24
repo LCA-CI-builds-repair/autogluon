@@ -5,7 +5,24 @@ import numpy as np
 
 class InferenceSessionWrapper:
     """
-    Wrap around InferenceSession in onnxruntime, since it cannot be pickled.
+    Wrap around Inffrom skl2onnx import convert_sklearn
+from autogluon.tabular.models.rf.predictor import RFOnnxPredictor
+from skl2onnx.common.data_types import FloatTensorType
+from sklearn.ensemble import ExtraTreesClassifier, RandomForestClassifier
+
+input_shape = list(input_types[0][0])
+initial_type = [("float_input", FloatTensorType(input_shape)]
+
+# Without ZipMap
+# See http://onnx.ai/sklearn-onnx/auto_examples/plot_convert_zipmap.html#without-zipmap
+options = {}
+if isinstance(model, (RandomForestClassifier, ExtraTreesClassifier)):
+    options = {id(model): {"zipmap": False}}
+
+# Convert the model to ONNX
+onnx_model = convert_sklearn(model, initial_types=initial_type, options=options)
+predictor = RFOnnxPredictor(model=onnx_model)
+RFOnnxCompiler.save(onnx_model, path) onnxruntime, since it cannot be pickled.
     See https://github.com/microsoft/onnxruntime/issues/10097
     """
 

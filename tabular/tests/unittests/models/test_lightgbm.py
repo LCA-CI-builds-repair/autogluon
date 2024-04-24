@@ -1,4 +1,19 @@
-from autogluon.core.constants import BINARY, MULTICLASS, REGRESSION
+from adef test_lightgbm_binary(fit_helper):
+    """Additionally tests that all binary metrics work"""
+    fit_args = dict(
+        hyperparameters={LGBModel: {}},
+    )
+    extra_metrics = list(METRICS[BINARY].values())
+
+    fit_helper.fit_and_validate_dataset(dataset_name="adult", fit_args=fit_args, extra_metrics=extra_metrics)
+
+
+def test_lightgbm_multiclass(fit_helper):
+    """Additionally tests that all multiclass metrics work"""
+    fit_args = dict(
+        hyperparameters={LGBModel: {}},
+    )
+    extra_metrics = list(METRICS[MULTICLASS].values())nstants import BINARY, MULTICLASS, REGRESSION
 from autogluon.core.metrics import METRICS
 from autogluon.tabular.models.lgb.lgb_model import LGBModel
 

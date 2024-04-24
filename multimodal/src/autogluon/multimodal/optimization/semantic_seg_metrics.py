@@ -23,7 +23,21 @@ def _prepare_data(pred: np.ndarray, gt: np.ndarray) -> tuple:
     # im2double, mapminmax
     pred = pred / 255
     if pred.max() != pred.min():
-        pred = (pred - pred.min()) / (pred.max() - pred.min())
+        pred = (pred - preimport torch
+import numpy as np
+
+class Multiclass_IoU_Pred:
+    """
+    Compute the IoU for multi-class semantic segmentation based on https://github.com/xieenze/Trans2Seg/blob/master/segmentron/utils/score.py.
+    The direct use of torchmetrics for large dataset will lead to issues such as high CPU usage or insufficient memory.
+    """
+
+    def compute_iou(self, pred_mask, true_mask):
+        # Implement the IoU computation logic here
+        intersection = torch.logical_and(pred_mask, true_mask).sum()
+        union = torch.logical_or(pred_mask, true_mask).sum()
+        iou = intersection / union
+        return iou)) / (pred.max() - pred.min())
     return pred, gt
 
 
