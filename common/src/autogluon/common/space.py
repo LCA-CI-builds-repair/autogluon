@@ -51,8 +51,8 @@ class Categorical(DiscreteSpace):
 
     Parameters
     ----------
-    data : Space or python built-in objects
-        the choice candidates
+    data : list or python built-in objects
+        The list of choice candidates for the categorical hyperparameter.
 
     Examples
     --------

@@ -193,10 +193,14 @@ class TabularPredictor:
         In binary classification, :meth:`TabularPredictor.predict_proba` returns the estimated probability that each row belongs to the positive class.
         Will print a warning and return None if called when `predictor.problem_type != 'binary'`.
     class_labels : list
-        For multiclass problems, this list contains the class labels in sorted order of `predict_proba()` output.
-        For binary problems, this list contains the class labels in sorted order of `predict_proba(as_multiclass=True)` output.
-            `class_labels[0]` corresponds to internal label = 0 (negative class), `class_labels[1]` corresponds to internal label = 1 (positive class).
-            This is relevant for certain metrics such as F1 where True and False labels impact the metric score differently.
+        For multiclass problems, this list contains the class labels in sorted order of the `predict_proba()` output.
+        For binary problems, this list contains the class labels in sorted order of the `predict_proba(as_multiclass=True)` output.
+        
+        In multiclass problems:
+            - `class_labels[0]` corresponds to the internal label = 0 (representing the negative class).
+            - `class_labels[1]` corresponds to the internal label = 1 (representing the positive class).
+        
+        This distinction is important for certain metrics such as F1, where the True and False labels have different impacts on the metric score.
         For other problem types, will equal None.
         For example if `pred = predict_proba(x, as_multiclass=True)`, then ith index of `pred` provides predicted probability that `x` belongs to class given by `class_labels[i]`.
     class_labels_internal : list

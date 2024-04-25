@@ -31,9 +31,9 @@ def download(input_bucket, input_prefix, local_path):
 
 
 # TODO: Expand to support arbitrary list of candidate file paths
-# TODO: add local file path support as a more general function
+# TODO: Add local file path support as a more general function
 # TODO: Consider renaming and deprecating old name
-# TODO: consider using a single parameter supporting wildcards or regex - this will solve all possible use cases for filtering
+# TODO: Consider using a single parameter supporting wildcards or regex - this will solve all possible use cases for filtering
 #   list_bucket_prefix_suffix_contains_s3(..., exclude=['**/*.bak', '**/data/*_excl.csv'])
 # TODO: Add unit tests for non-boto3 logic
 def list_bucket_prefix_suffix_contains_s3(

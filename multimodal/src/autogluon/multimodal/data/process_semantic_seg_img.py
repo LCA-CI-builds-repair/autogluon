@@ -66,14 +66,13 @@ class SemanticSegImageProcessor:
             A list of image transforms for image.
         gt_transforms
             A list of image transforms for ground truth image.
-        train_transforms
+        train_transforms:
             A list of image transforms used in training for data augmentation. Note that the transform order matters.
-        val_transforms
+        val_transforms:
             A list of image transforms used in validation/test/prediction. Note that the transform order matters.
-        norm_type
+        norm_type:
             How to normalize an image. We now support:
-            - inception
-                Normalize image by IMAGENET_INCEPTION_MEAN and IMAGENET_INCEPTION_STD from timm
+            - inception: Normalize image by IMAGENET_INCEPTION_MEAN and IMAGENET_INCEPTION_STD from timm
             - imagenet
                 Normalize image by IMAGENET_DEFAULT_MEAN and IMAGENET_DEFAULT_STD from timm
             - clip
