@@ -69,7 +69,7 @@ def inner_test_tabular(testname):
     # Now run the Predictor 1 or more times with various parameters, and make sure we get
     # back the expected results.
 
-    # Params can either omitted, or a single run, or a list of runs.
+    # Params can either be omitted, or a single run, or a list of runs.
     if "params" not in test:
         test["params"] = {"predict": {}, "fit": {}}
     if not isinstance(test["params"], list):
