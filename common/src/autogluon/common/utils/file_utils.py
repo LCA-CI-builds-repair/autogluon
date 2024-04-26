@@ -49,12 +49,12 @@ def get_directory_size_per_file(path: str, *, sort_by: str = "size", include_pat
         for file_name in file_names:
             file_path = os.path.join(dir_path, file_name)
             if not os.path.islink(file_path):  # skip symbolic links
-                file_size = os.path.getsize(file_path)
-                if include_path_in_name:
-                    file_sizes[file_path] = file_size
-                else:
-                    # remove path from file_path in dictionary
-                    file_sizes[file_path.split(og_dir_path, 1)[-1]] = file_size
+file_size = os.path.getsize(file_path)
+if include_path_in_name:
+    file_sizes[file_path] = file_size
+else:
+    # remove path from file_path in dictionary
+    file_sizes[file_path.replace(og_dir_path, '', 1)] = file_size
 
     file_size_series = pd.Series(file_sizes, name="size")
     if sort_by is None:

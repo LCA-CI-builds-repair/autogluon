@@ -403,7 +403,7 @@ class RayHpoExecutor(HpoExecutor):
         from .ray_hpo import RayTuneAdapterFactory, run
 
         # Disable tensorboard logging to avoid layer warning
-        # TODO: remove this when ray tune fix ray tune pass tuple to hyperopt issue
+        # Set environment variable to disable auto callback loggers for Ray Tune fix
         os.environ["TUNE_DISABLE_AUTO_CALLBACK_LOGGERS"] = "1"
         analysis = run(
             trainable=model_trial,

@@ -367,7 +367,7 @@ class LoRAEmbedding(nn.Embedding, LoRALayer):
             self.merged = False
 
     def eval(self):
-        nn.Linear.eval(self)
+        super().eval()
         if self.merge_weights and not self.merged:
             # Merge the weights and mark it
             if self.r > 0:
@@ -376,7 +376,7 @@ class LoRAEmbedding(nn.Embedding, LoRALayer):
 
     def forward(self, x: torch.Tensor):
         if self.r > 0 and not self.merged:
-            result = nn.Embedding.forward(self, x)
+            result = super().forward(x)
             if self.r > 0:
                 after_A = F.embedding(
                     x,
@@ -390,7 +390,7 @@ class LoRAEmbedding(nn.Embedding, LoRALayer):
                 result += (after_A @ self.lora_B.T) * self.scaling
             return result
         else:
-            return nn.Embedding.forward(self, x)
+            return super().forward(x)
 
 
 class LoRAMergedLinear(nn.Linear, LoRALayer):

@@ -190,11 +190,11 @@ def sanity_check_dataframe(data: pd.DataFrame):
     if "image" not in data:
         raise ValueError(f"column 'image' not found in data column names: {data.columns.to_list()}")
     if "rois" not in data and "label" not in data:
-        raise ValueError(f"Both column 'rois' and 'label' not found in data column names: {data.columns.to_list()}")
+        raise ValueError(f"Both columns 'rois' and 'label' not found in data column names: {data.columns.to_list()}")
     else:
         if "rois" not in data:
             warnings.warn(
-                f"column 'rois' not found in data column names: {data.columns.to_list()}. Copying from 'label' column..."
+                f"Column 'rois' not found in data column names: {data.columns.to_list()}. Copying from 'label' column..."
             )
             data["rois"] = data["label"]
         if "label" not in data:

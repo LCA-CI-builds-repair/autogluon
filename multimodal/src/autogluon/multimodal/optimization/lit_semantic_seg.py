@@ -11,13 +11,13 @@ from .lit_module import LitModule
 from .semantic_seg_metrics import Multiclass_IoU
 
 logger = logging.getLogger(__name__)
+import pytorch_lightning as pl
 
-
-class SemanticSegmentationLitModule(LitModule):
+class SemanticSegmentationLitModule(pl.LightningModule):
     """
     Control the loops for training, evaluation, and prediction. This module is independent of
-    the model definition. This class inherits from the Pytorch Lightning's LightningModule:
-    https://lightning.ai/docs/pytorch/stable/common/lightning_module.html
+    the model definition. This class inherits from the PyTorch Lightning's LightningModule:
+    https://pytorch-lightning.ai/docs/stable/common/lightning_module.html
     """
 
     def _compute_loss(self, output: Dict, label: torch.Tensor, **kwargs):
