@@ -299,7 +299,7 @@ class DocumentProcessor:
                     doc_image = doc_image.convert(image_mode)
                     words = ""  # empty words
                     normalized_word_boxes = [self.pad_token_box]
-                else:
+                except Exception as e:
                     raise e
 
             if is_training:

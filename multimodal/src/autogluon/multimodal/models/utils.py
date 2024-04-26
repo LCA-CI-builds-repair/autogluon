@@ -252,9 +252,9 @@ def group_param_names(
 
 def reverse_layer_ids(
     encoder_name_to_id: dict,
-    pre_enocder_name_to_id: dict,
-    post_enocder_name_to_id: dict,
-):
+    pre_encoder_name_to_id: dict,
+    post_encoder_name_to_id: dict,
+)
     """
     The layer ids need to increase when going from the output end to the input end.
     We need to reverse the ids which were originally assigned in a decreasing order.
@@ -471,13 +471,17 @@ def create_adaptation(efficient_finetune: str, layer: nn.Module, lora_r: int, lo
         raise NotImplementedError(
             f"The efficient finetuning strategy '{efficient_finetune}'"
             f" is not supported. We only support"
+        )
             f" {', '.join(PEFT_STRATEGIES)}."
         )
 
 
 def inject_adaptation_to_linear_layer(
-    model: nn.Module,
-    efficient_finetune: str,
+import torch.nn as nn
+
+def inject_lora(
+    layer: nn.Module,
+    efficient_finetuning: str,
     lora_r: int = None,
     lora_alpha: int = None,
     filter: Optional[List[str]] = None,
@@ -485,6 +489,7 @@ def inject_adaptation_to_linear_layer(
     extra_trainable_params: Optional[List[str]] = None,
 ) -> nn.Module:
     """
+    Injects trainable adaptation Low-Rank decomposition matrices (LoRA) into linear
     Injects trainable adatio Low-Rank decomposition matrices (LoRA) into linear
     layers of a PyTorch model. Used for efficient fine-tuning of large
     pre-trained models.

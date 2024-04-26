@@ -1537,7 +1537,7 @@ class AbstractModel:
             minimum_gpu_per_trial=minimum_resources.get("num_gpus", 0),
             model_estimate_memory_usage=model_estimate_memory_usage,
             adapter_type="tabular",
-            tune_config_kwargs={"chdir_to_trial_dir": False},
+            tune_kwargs={"chdir_to_trial_dir": False},
         )
 
         hpo_results = hpo_executor.get_hpo_results(
@@ -1958,8 +1958,13 @@ class AbstractModel:
         even if the functionality is not natively available as a parameter in the model itself or under a different name.
 
         Below are common patterns / options to make available. Their actual usage and options in a particular model should be documented in the model itself, as it has flexibility to differ.
-
+        """
+        Abstract method for defining the model architecture.
+        
         Possible params:
+        - param1: Description of param1.
+        - param2: Description of param2.
+        """
 
         early_stop : int, str, or tuple
             generic name for early stopping logic. Typically can be an int or a str preset/strategy.

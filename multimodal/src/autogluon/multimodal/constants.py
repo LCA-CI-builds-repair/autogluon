@@ -220,7 +220,7 @@ IA3_BIAS = "ia3_bias"
 IA3_NORM = "ia3_norm"
 IA3_LORA = "ia3_lora"
 IA3_LORA_BIAS = "ia3_lora_bias"
-IA3_LORA_NORM = "Ia3_lora_norm"
+IA3_LORA_NORM = "ia3_lora_norm"
 PEFT_STRATEGIES = [
     BIT_FIT,
     NORM_FIT,

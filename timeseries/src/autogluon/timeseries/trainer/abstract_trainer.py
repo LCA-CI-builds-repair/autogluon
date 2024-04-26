@@ -736,8 +736,8 @@ class AbstractTimeSeriesTrainer(SimpleAbstractTrainer):
                 prediction_length=self.prediction_length, known_covariates_names=self.metadata.known_covariates_real
             )
             logger.info(
-                "Additional data provided, testing on additional data. Resulting leaderboard "
-                "will be sorted according to test score (`score_test`)."
+                logger.info("Additional data provided, testing on additional data. Resulting leaderboard "
+                             "will be sorted according to test score (`score_test`).")
             )
             model_predictions, pred_time_dict = self.get_model_pred_dict(
                 model_names=model_names,

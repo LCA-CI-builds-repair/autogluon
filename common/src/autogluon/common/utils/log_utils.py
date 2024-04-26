@@ -103,10 +103,14 @@ def _add_stream_handler():
     # This function is supposed to be called before any logging from autogluon happens
     if not any(isinstance(h, logging.StreamHandler) for h in _logger_ag.handlers):
         stream_handler = logging.StreamHandler()
-        formatter = logging.Formatter("%(message)s")
-        stream_handler.setFormatter(formatter)
-        _logger_ag.addHandler(stream_handler)
-        _logger_ag.propagate = False
+import logging
+
+_logger_ag = logging.getLogger(__name__)
+stream_handler = logging.StreamHandler()
+formatter = logging.Formatter("%(message)s")
+stream_handler.setFormatter(formatter)
+_logger_ag.addHandler(stream_handler)
+_logger_ag.propagate = False
 
 
 __FIXED_KAGGLE_LOGGING = False
@@ -118,10 +122,14 @@ def fix_logging_if_kaggle():
     This function checks if we are in a Kaggle notebook, and if so adds a StreamHandler to AutoGluon's logger to ensure logs are shown.
     """
     global __FIXED_KAGGLE_LOGGING
-    if (not __FIXED_KAGGLE_LOGGING) and _check_if_kaggle():
-        _add_stream_handler()
-    # After the fix is performed, or it is determined we are not in Kaggle, no need to fix again.
-    __FIXED_KAGGLE_LOGGING = True
+def convert_time_in_s_to_log_friendly(time_in_sec: float, min_value: float = 0.01):
+    """
+    Convert a time value in seconds to a log-friendly format.
+
+    Parameters:
+    - time_in_sec (float): The time value in seconds to be converted.
+    - min_value (float): The minimum value for the time. Default is 0.01.
+    """
 
 
 def convert_time_in_s_to_log_friendly(time_in_sec: float, min_value: float = 0.01):
