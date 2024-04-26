@@ -300,10 +300,9 @@ class CustomDeepSpeedStrategy(DeepSpeedStrategy):
             rank_zero_warn(
                 "Since DeepSpeed handles gradient clipping internally, the default"
                 " `LightningModule.configure_gradient_clipping` implementation will not actually clip gradients."
-                " The hook will still be called. Consider setting"
-                " `Trainer(gradient_clip_val=..., gradient_clip_algorithm='norm')`"
-                " which will use the internal mechanism."
-            )
+                " The hook will still be called. Consider setting "
+                "`Trainer(gradient_clip_val=..., gradient_clip_algorithm='norm')` "
+                "which will use the internal mechanism."
 
         if self.lightning_module.trainer.gradient_clip_algorithm == GradClipAlgorithmType.VALUE:
             raise MisconfigurationException("DeepSpeed does not support clipping gradients by value.")

@@ -71,12 +71,12 @@ class TimeSeriesPredictor:
         Point forecast metrics (these are always evaluated on the ``"mean"`` column of the predictions):
 
         - ``"MAPE"``: mean absolute percentage error
-        - ``"sMAPE"``: "symmetric" mean absolute percentage error
-        - ``"MASE"``: mean absolute scaled error
-        - ``"MSE"``: mean squared error
-        - ``"RMSE"``: root mean squared error
-        - ``"WAPE"``: weighted absolute percentage error
-        - ``"RMSSE"``: Root Mean Squared Scaled Error . See https://otexts.com/fpp3/accuracy.html#scaled-errors
+        - ``"sMAPE"``: "symmetric mean absolute percentage error"
+        - ``"MASE"``: "mean absolute scaled error"
+        - ``"MSE"``: "mean squared error"
+        - ``"RMSE"``: "root mean squared error"
+        - ``"WAPE"``: "weighted absolute percentage error"
+        - ``"RMSSE"``: Root Mean Squared Scaled Error. See https://otexts.com/fpp3/accuracy.html#scaled-errors
 
         For more information about these metrics, see https://docs.aws.amazon.com/forecast/latest/dg/metrics.html.
     eval_metric_seasonal_period : int, optional

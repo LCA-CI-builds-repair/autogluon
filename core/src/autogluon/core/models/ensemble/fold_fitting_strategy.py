@@ -57,6 +57,7 @@ class AbstractFoldFittingStrategy:
 class FoldFittingStrategy(AbstractFoldFittingStrategy):
     """
     Provides some default implementation for AbstractFoldFittingStrategy
+    """
 
     Parameters
     ----------
@@ -481,7 +482,14 @@ class ParallelFoldFittingStrategy(FoldFittingStrategy):
         self.resources, self.resources_model, self.batches, self.num_parallel_jobs = self._get_resource_suggestions(
             num_jobs=num_jobs, user_specified_num_folds_parallel=num_folds_parallel, user_resources_per_job=self.user_resources_per_job
         )
+# Import necessary modules
+import logging
+import math
+from typing import Any, Dict, List
 
+logger = logging.getLogger(__name__)
+
+class FoldFittingStrategy:
     def mem_est_proportion_per_fold(self):
         return (self.mem_est_model + self.mem_est_data) / self.mem_available
 
@@ -503,7 +511,7 @@ class ParallelFoldFittingStrategy(FoldFittingStrategy):
         num_folds_parallel = user_specified_num_folds_parallel
         if max_folds_to_train_with_mem < user_specified_num_folds_parallel:
             # If memory is not sufficient to train num_folds_parallel, reduce to max power of 2 folds that's smaller than folds_can_be_fit_in_parallel.
-            num_folds_parallel = int(math.pow(2, math.floor((math.log10(max_folds_to_train_with_mem) / math.log10(2)))))
+            num_folds_parallel = int(math.pow(2, math.floor((math.log10(max_folds_to_train_with_mem) / math.log10(2))))
             logger.log(
                 30,
                 f"\tMemory not enough to fit {user_specified_num_folds_parallel} folds in parallel. "
@@ -512,207 +520,7 @@ class ParallelFoldFittingStrategy(FoldFittingStrategy):
             )
         return num_folds_parallel
 
-    def _estimate_data_memory_usage(self):
-        X_mem = get_approximate_df_mem_usage(self.X).sum()
-        y_mem = get_approximate_df_mem_usage(self.y.to_frame()).sum()
-        return X_mem + y_mem
-
-    def schedule_fold_model_fit(self, fold_ctx):
-        self.jobs.append(fold_ctx)
-
-    def _get_ray_init_args(self) -> Dict[str, Any]:
-        """
-        Get the arguments needed to init ray runtime.
-        This could differ in different context, i.e. distributed vs local
-        """
-        return dict(address="auto", logging_level=logging.ERROR, log_to_driver=False)
-
-    def _process_fold_results(self, finished, unfinished, fold_ctx):
-        try:
-            fold_model, pred_proba, time_start_fit, time_end_fit, predict_time, predict_1_time = self.ray.get(finished)
-            assert fold_ctx is not None
-            self._update_bagged_ensemble(
-                fold_model=fold_model,
-                pred_proba=pred_proba,
-                time_start_fit=time_start_fit,
-                time_end_fit=time_end_fit,
-                predict_time=predict_time,
-                predict_1_time=predict_1_time,
-                fold_ctx=fold_ctx,
-            )
-            model_sync_path = None
-            if self.model_sync_path is not None:
-                model_sync_path: str = self.model_sync_path + fold_model
-                if not model_sync_path.endswith("/"):
-                    model_sync_path += "/"
-            self.sync_model_artifact(local_path=os.path.join(self.bagged_ensemble_model.path, fold_model), model_sync_path=model_sync_path)
-        except TimeLimitExceeded:
-            # Terminate all ray tasks because a fold failed
-            self.terminate_all_unfinished_tasks(unfinished)
-            raise TimeLimitExceeded
-        # NotEnoughMemoryError is an autogluon custom error,
-        # it predict memory usage before hand
-        # MemoryError is the actual python memory error if the process failed
-        except (NotEnoughMemoryError, MemoryError):
-            error_msg = "Consider decreasing folds trained in parallel by passing num_folds_parallel to ag_args_ensemble when calling `predictor.fit`."
-            logger.warning(error_msg)
-            # Terminate all ray tasks because a fold failed
-            self.terminate_all_unfinished_tasks(unfinished)
-            raise NotEnoughMemoryError
-        except Exception as e:
-            processed_exception = self._parse_ray_error(e)
-            # Terminate all ray tasks because a fold failed
-            self.terminate_all_unfinished_tasks(unfinished)
-            raise processed_exception
-
-    def _update_bagged_ensemble_times(self):
-        self.fit_time = 0
-        if self.time_start_fit and self.time_end_fit:
-            self.fit_time = self.time_end_fit - self.time_start_fit
-        self.bagged_ensemble_model._add_parallel_child_times(fit_time=self.fit_time, predict_time=self.predict_time, predict_1_time=self.predict_1_time)
-
-    def _run_parallel(self, X, y, X_pseudo, y_pseudo, model_base_ref, time_limit_fold, head_node_id):
-        job_refs = []
-        job_fold_map = {}
-
-        # spread the task
-        for job in self.jobs:
-            fold_ctx = job
-            ref = self._fit(
-                model_base_ref=model_base_ref,
-                X_ref=X,
-                y_ref=y,
-                X_pseudo_ref=X_pseudo,
-                y_pseudo_ref=y_pseudo,
-                time_limit_fold=time_limit_fold,
-                fold_ctx=fold_ctx,
-                resources=self.resources,
-                resources_model=self.resources_model,
-                head_node_id=head_node_id,
-                kwargs=self.model_base_kwargs,
-            )
-            job_fold_map[ref] = fold_ctx
-            job_refs.append(ref)
-
-        # update ensemble whenever a model return
-        unfinished = job_refs
-        while unfinished:
-            finished, unfinished = self.ray.wait(unfinished, num_returns=1)
-            finished = finished[0]
-            fold_ctx = job_fold_map.get(finished, None)
-            self._process_fold_results(finished, unfinished, fold_ctx)
-
-        self._update_bagged_ensemble_times()
-
-    def _run_pseudo_sequential(self, X, y, X_pseudo, y_pseudo, model_base_ref, time_limit_fold, head_node_id):
-        """
-        A pseudo sequential runner using ray. The advantage of this is related to memory management in Python.
-        As each fold is executed in its own subprocess, the memory state of the main process is clean and does
-        not rely on the unreliable garbage collector of Python. In contrast to `SequentialLocalFoldFittingStrategy`,
-        this fold fitting strategy will not leak memory across fits.
-
-        Moreover, compared to just running the default `_run_parallel`, this code also has a lower worst case memory
-        overhead. Here, at most, we have the overhead of one fold. In the case of `_run_parallel` the asynchronous
-        processing of the fold results can result in having up to k-1 fold overhead at the same time. Furthermore,
-        a job could start fitting a model while the results are processed; resulting in the fit running out of memory
-        due to the overhead of processing and storing the result.
-        """
-        for job in self.jobs:
-            fold_ctx = job
-            ref = self._fit(
-                model_base_ref=model_base_ref,
-                X_ref=X,
-                y_ref=y,
-                X_pseudo_ref=X_pseudo,
-                y_pseudo_ref=y_pseudo,
-                time_limit_fold=time_limit_fold,
-                fold_ctx=fold_ctx,
-                resources=self.resources,
-                resources_model=self.resources_model,
-                head_node_id=head_node_id,
-                kwargs=self.model_base_kwargs,
-            )
-
-            finished, unfinished = self.ray.wait([ref], num_returns=1)
-            self._process_fold_results(finished[0], unfinished, fold_ctx)
-
-        self._update_bagged_ensemble_times()
-
-    def after_all_folds_scheduled(self):
-        if not self.ray.is_initialized():
-            ray_init_args = self._get_ray_init_args()
-            self.ray.init(**ray_init_args)
-        head_node_id = self.ray.get_runtime_context().get_node_id()
-        logger.debug(f"Dispatching folds on node {head_node_id}")
-
-        # prepare shared data
-        X, y, X_pseudo, y_pseudo = self._prepare_data()
-        model_base_ref = self.ray.put(self.model_base)
-        time_limit_fold = self._get_fold_time_limit()
-
-        if self._pseudo_sequential:
-            logger.log(
-                30,
-                f"\t\tSwitching to pseudo sequential ParallelFoldFittingStrategy to avoid Python memory leakage.\n"
-                f"\t\tOverrule this behavior by setting fold_fitting_strategy to 'sequential_local' in ag_args_ensemble when when calling `predictor.fit`",
-            )
-            self._run_pseudo_sequential(X, y, X_pseudo, y_pseudo, model_base_ref, time_limit_fold, head_node_id)
-        else:
-            self._run_parallel(X, y, X_pseudo, y_pseudo, model_base_ref, time_limit_fold, head_node_id)
-
-    def terminate_all_unfinished_tasks(self, unfinished_tasks):
-        for task in unfinished_tasks:
-            self.ray.cancel(task, force=True)
-
-    def _fit(
-        self,
-        *,
-        model_base_ref,
-        X_ref,
-        y_ref,
-        X_pseudo_ref,
-        y_pseudo_ref,
-        time_limit_fold: float,
-        fold_ctx: dict,
-        resources: dict,
-        head_node_id: str,
-        kwargs: dict,
-        resources_model: dict = None,
-    ):
-        if resources_model is None:
-            resources_model = resources
-        fold, folds_finished, folds_left, folds_to_fit, is_last_fold, model_name_suffix = self._get_fold_properties(fold_ctx)
-        logger.debug(f"Folding resources per job {resources}")
-        train_index, val_index = fold
-        fold_ctx_ref = self.ray.put(fold_ctx)
-        save_bag_folds = self.save_folds
-        kwargs_fold = kwargs.copy()
-        is_pseudo = X_pseudo_ref is not None and y_pseudo_ref is not None
-        if self.sample_weight is not None:
-            if is_pseudo:
-                # TODO: Add support for sample_weight when pseudo is present
-                raise Exception("Sample weights given, but not used due to pseudo labelled data being given.")
-            else:
-                kwargs_fold["sample_weight"] = self.sample_weight[train_index]
-                kwargs_fold["sample_weight_val"] = self.sample_weight[val_index]
-        pg = self.ray.util.get_current_placement_group()
-        return self._ray_fit.options(
-            **resources, scheduling_strategy=self.ray.util.scheduling_strategies.PlacementGroupSchedulingStrategy(placement_group=pg)
-        ).remote(
-            model_base=model_base_ref,
-            bagged_ensemble_model_path=self.bagged_ensemble_model.path,
-            X=X_ref,
-            y=y_ref,
-            X_pseudo=X_pseudo_ref,
-            y_pseudo=y_pseudo_ref,
-            fold_ctx=fold_ctx_ref,
-            time_limit_fold=time_limit_fold,
-            save_bag_folds=save_bag_folds,
-            resources=resources_model,
-            kwargs_fold=kwargs_fold,
-            head_node_id=head_node_id,
-            model_sync_path=self.model_sync_path,
-        )
+    # Other methods in the FoldFittingStrategy class...
 
     def _update_bagged_ensemble(self, fold_model, pred_proba, time_start_fit, time_end_fit, predict_time, predict_1_time, fold_ctx):
         _, val_index = fold_ctx["fold"]

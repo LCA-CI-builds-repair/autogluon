@@ -739,6 +739,7 @@ class AbstractTimeSeriesTrainer(SimpleAbstractTrainer):
                 "Additional data provided, testing on additional data. Resulting leaderboard "
                 "will be sorted according to test score (`score_test`)."
             )
+            )
             model_predictions, pred_time_dict = self.get_model_pred_dict(
                 model_names=model_names,
                 data=past_data,

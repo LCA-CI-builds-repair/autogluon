@@ -177,13 +177,10 @@ class LocalSequentialScheduler(object):
 
             if failure_count >= min_failure_threshold and (failure_count / trial_count) >= failure_rate_threshold:
                 logger.warning(
-                    f"Warning: Detected a large trial failure rate: "
-                    f"{failure_count}/{trial_count} attempted trials failed ({round((failure_count / trial_count) * 100, 1)}%)! "
-                    f"Stopping HPO early due to reaching failure threshold ({round(failure_rate_threshold*100, 1)}%).\n"
-                    f"\tFailures may be caused by invalid configurations within the provided search space."
+                    f"Detected a high trial failure rate: {failure_count}/{trial_count} trials failed ({round((failure_count / trial_count) * 100, 1)}%). "
+                    f"Stopping HPO early due to reaching failure threshold ({round(failure_rate_threshold*100, 1)}%)."
                 )
                 break
-
             if self.time_out is not None:
                 avg_trial_run_time = 0 if trial_count == failure_count else trials_total_time / (trial_count - failure_count)
                 if not self.has_enough_time_for_trial_(self.time_out, time_start, trial_start_time, trial_end_time, avg_trial_run_time):

@@ -200,7 +200,8 @@ def download(
                         for chunk in r.iter_content(chunk_size=chunk_size):
                             if chunk:  # filter out keep-alive new chunks
                                 if tqdm is not None:
-                                    t.update(len(chunk))
+                                    if 't' in locals():
+                                        t.update(len(chunk))
                                 f.write(chunk)
                     if tqdm is not None:
                         t.close()

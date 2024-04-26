@@ -247,9 +247,10 @@ class VowpalWabbitModel(AbstractModel):
     def _get_default_auxiliary_params(self) -> dict:
         default_auxiliary_params = super()._get_default_auxiliary_params()
         # Ignore the below mentioned special types. Only those features that are not of the below mentioned
-        # type are passed to the model for training list are passed features
+        # types are passed to the model for training. List of features are passed.
         extra_auxiliary_params = dict(
-            valid_raw_types=[R_INT, R_FLOAT, R_CATEGORY, R_OBJECT], ignored_type_group_special=[S_IMAGE_PATH, S_TEXT_NGRAM, S_TEXT_AS_CATEGORY, S_TEXT_SPECIAL]
+            valid_raw_types=[R_INT, R_FLOAT, R_CATEGORY, R_OBJECT],
+            ignored_type_group_special=[S_IMAGE_PATH, S_TEXT_NGRAM, S_TEXT_AS_CATEGORY, S_TEXT_SPECIAL]
         )
         default_auxiliary_params.update(extra_auxiliary_params)
         return default_auxiliary_params

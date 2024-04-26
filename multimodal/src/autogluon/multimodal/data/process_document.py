@@ -297,10 +297,10 @@ class DocumentProcessor:
                     logger.debug(f"Using a zero image due to '{e}'")
                     doc_image = PIL.Image.new(image_mode, (self.size, self.size), color=0)
                     doc_image = doc_image.convert(image_mode)
-                    words = ""  # empty words
-                    normalized_word_boxes = [self.pad_token_box]
+                    words = []  # initialize words as an empty list
+                    normalized_word_boxes = [self.pad_token_box]  # initialize normalized_word_boxes with pad_token_box
                 else:
-                    raise e
+                    raise e  # Handle the exception 'e' appropriately
 
             if is_training:
                 doc_image = self.train_processor(doc_image)

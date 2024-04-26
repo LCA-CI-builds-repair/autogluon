@@ -135,7 +135,7 @@ def inner_test_tabular(testname):
 
 
 # The tests are all run individually rather than in 1 big loop that simply goes through the tests dictionary.
-# This is so we easily remove some tests if necessary.
+# Define parameterized tests for different regression scenarios
 @pytest.mark.parametrize(
     "testname",
     [
@@ -145,6 +145,8 @@ def inner_test_tabular(testname):
         "small regression very light hyperparameters",
         "small regression toy hyperparameters",
         "small regression high quality",
+    ]
+)
         "small regression best quality",
         "small regression with categorical",
         "small regression metric mae",

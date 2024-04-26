@@ -16,11 +16,10 @@ def test_auto_ml_pipeline_feature_generator(generator_helper, data_helper):
         AutoMLPipelineFeatureGenerator(generators=[], vectorizer=toy_vectorizer)
 
     generator = AutoMLPipelineFeatureGenerator(vectorizer=toy_vectorizer)
-
     for generator_stage in generator.generators:
         for generator_inner in generator_stage:
             if isinstance(generator_inner, TextNgramFeatureGenerator):
-                # Necessary in test to avoid CI non-deterministically pruning ngram counts.
+                # Set max_memory_ratio to None for TextNgramFeatureGenerator in test to avoid non-deterministic ngram count pruning in CI.
                 generator_inner.max_memory_ratio = None
 
     expected_feature_metadata_in_full = {
@@ -91,12 +90,12 @@ def test_auto_ml_pipeline_feature_generator_raw_text(generator_helper, data_help
     toy_vectorizer = CountVectorizer(min_df=2, ngram_range=(1, 3), max_features=1000, dtype=np.uint8)
 
     generator = AutoMLPipelineFeatureGenerator(enable_raw_text_features=True, vectorizer=toy_vectorizer)
+    generator = AutoMLPipelineFeatureGenerator(enable_raw_text_features=True, vectorizer=toy_vectorizer)
 
     for generator_stage in generator.generators:
         for generator_inner in generator_stage:
             if isinstance(generator_inner, TextNgramFeatureGenerator):
-                # Necessary in test to avoid CI non-deterministically pruning ngram counts.
-                generator_inner.max_memory_ratio = None
+                # Ensure TextNgramFeatureGenerator is handled appropriately in the test scenario.
 
     expected_feature_metadata_in_full = {
         ("category", ()): ["cat"],
@@ -262,15 +261,15 @@ def test_auto_ml_pipeline_feature_generator_duplicates_without_dedupe(generator_
     This test additionally turns off the drop_duplicates logic
 
     Test the most complicated situation: Many duplicate features, useless features, and all dtypes at once
-    This test ensures the fix in https://github.com/autogluon/autogluon/pull/2986 works, test failed prior to fix
-    """
+    # Test the most complicated situation: Many duplicate features, useless features, and all dtypes at once.
+    # This test ensures the fix in https://github.com/autogluon/autogluon/pull/2986 works, test failed prior to fix.
     # Given
     input_data = data_helper.generate_duplicate()
 
     toy_vectorizer = CountVectorizer(min_df=2, ngram_range=(1, 3), max_features=1000, dtype=np.uint8)
 
     with pytest.raises(KeyError):
-        # generators is an invalid argument
+        # 'generators' is an invalid argument
         AutoMLPipelineFeatureGenerator(generators=[], vectorizer=toy_vectorizer, post_drop_duplicates=False)
 
     generator = AutoMLPipelineFeatureGenerator(vectorizer=toy_vectorizer, post_drop_duplicates=False)
@@ -278,8 +277,7 @@ def test_auto_ml_pipeline_feature_generator_duplicates_without_dedupe(generator_
     for generator_stage in generator.generators:
         for generator_inner in generator_stage:
             if isinstance(generator_inner, TextNgramFeatureGenerator):
-                # Necessary in test to avoid CI non-deterministically pruning ngram counts.
-                generator_inner.max_memory_ratio = None
+                # Ensure TextNgramFeatureGenerator is handled appropriately in the test scenario.
 
     expected_feature_metadata_in_full = {
         ("category", ()): ["cat"],

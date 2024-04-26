@@ -252,12 +252,13 @@ def group_param_names(
 
 def reverse_layer_ids(
     encoder_name_to_id: dict,
-    pre_enocder_name_to_id: dict,
-    post_enocder_name_to_id: dict,
+    pre_encoder_name_to_id: dict,
+    post_encoder_name_to_id: dict,
 ):
     """
     The layer ids need to increase when going from the output end to the input end.
     We need to reverse the ids which were originally assigned in a decreasing order.
+    """
 
     Parameters
     ----------
@@ -476,21 +477,20 @@ def create_adaptation(efficient_finetune: str, layer: nn.Module, lora_r: int, lo
 
 
 def inject_adaptation_to_linear_layer(
-    model: nn.Module,
     efficient_finetune: str,
     lora_r: int = None,
-    lora_alpha: int = None,
-    filter: Optional[List[str]] = None,
-    module_filter: Optional[List[str]] = None,
-    extra_trainable_params: Optional[List[str]] = None,
+    lora_alpha: float = None,  # Change the type from int to float
+    filter: Optional[List[str]] = None,  # Optional filter list
+    module_filter: Optional[List[str]] = None,  # Optional module filter list
+    extra_trainable_params: Optional[List[str]] = None,  # Optional extra trainable parameters list
 ) -> nn.Module:
     """
+    Injects trainable adatio Low-Rank decomposition matrices (LoRA) into linear
     Injects trainable adatio Low-Rank decomposition matrices (LoRA) into linear
     layers of a PyTorch model. Used for efficient fine-tuning of large
     pre-trained models.
 
     Parameters
-    ----------
     model
         A PyTorch model.
     efficient_finetune
@@ -498,12 +498,12 @@ def inject_adaptation_to_linear_layer(
     lora_r
         The rank r of the low-rank decomposition.
     lora_alpha
-        The scaling factor. Can be set to same value as r in
-        most cases, as initialization is scaled already.
+        The scaling factor. Can be set to the same value as r in most cases, as initialization is scaled already.
     filter
-        Apply loRA only to linear layers filtered by name (e.g. "query.").
-        If None, loRA is applied to all linear Layers in module.
+        Apply LoRA only to linear layers filtered by name (e.g., "query.").
+        If None, LoRA is applied to all linear layers in the module.
     module_filter
+        Apply LoRA only to modules filtered by name (e.g., ".*EncDecAttention|.*DenseReluDense")
         Apply loRA only to modules filtered by name (e.g. ".*EncDecAttention|.*DenseReluDense")
         If None, loRA is considered for all modules
     extra_trainable_params
