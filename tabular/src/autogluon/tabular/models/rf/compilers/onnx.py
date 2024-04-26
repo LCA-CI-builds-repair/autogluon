@@ -92,13 +92,13 @@ class RFOnnxCompiler:
         from sklearn.ensemble import ExtraTreesClassifier, RandomForestClassifier
 
         input_shape = list(input_types[0][0])
-        initial_type = [("float_input", FloatTensorType(input_shape))]
+        initial_type = [("float_input", FloatTensorType(input_shape)]
 
         # Without ZipMap
         # See http://onnx.ai/sklearn-onnx/auto_examples/plot_convert_zipmap.html#without-zipmap
         options = {}
         if isinstance(model, (RandomForestClassifier, ExtraTreesClassifier)):
-            options = {id(model): {"zipmap": False}}
+            options[id(model)] = {"zipmap": False}
 
         # Convert the model to onnx
         onnx_model = convert_sklearn(model, initial_types=initial_type, options=options)

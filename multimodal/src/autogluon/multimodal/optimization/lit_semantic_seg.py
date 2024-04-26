@@ -11,7 +11,7 @@ from .lit_module import LitModule
 from .semantic_seg_metrics import Multiclass_IoU
 
 logger = logging.getLogger(__name__)
-
+from pytorch_lightning import LitModule
 
 class SemanticSegmentationLitModule(LitModule):
     """

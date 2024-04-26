@@ -129,9 +129,8 @@ def test_pipeline_feature_generator_removal_advanced(generator_helper, data_help
     input_data = data_helper.generate_multi_feature_full()
 
     toy_vectorizer = CountVectorizer(min_df=2, ngram_range=(1, 3), max_features=10, dtype=np.uint8)
-
     text_ngram_feature_generator = TextNgramFeatureGenerator(vectorizer=toy_vectorizer)
-    text_ngram_feature_generator.max_memory_ratio = None  # Necessary in test to avoid CI non-deterministically pruning ngram counts.
+    text_ngram_feature_generator.max_memory_ratio = None  # Set to None in test to avoid CI non-deterministically pruning ngram counts.
 
     generator = PipelineFeatureGenerator(
         generators=[

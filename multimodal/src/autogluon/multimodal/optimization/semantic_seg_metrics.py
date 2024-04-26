@@ -842,9 +842,6 @@ class Balanced_Error_Rate_Pred:
         ber = 1 - torchmetrics.Accuracy(
             task="multiclass", num_classes=2, average="macro", multidim_average="samplewise"
         )(logits, labels)
-        return torch.mean(ber)
-
-
 class COD_Pred:
     def __init__(self):
         super().__init__()

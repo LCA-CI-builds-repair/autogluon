@@ -356,7 +356,7 @@ class LoRAEmbedding(nn.Embedding, LoRALayer):
         if hasattr(self, "lora_A"):
             # initialize A the same way as the default for nn.Linear and B to zero
             nn.init.zeros_(self.lora_A)
-            nn.init.normal_(self.lora_B)
+            nn.init.normal_(self.lora_B, mean=0.0, std=1.0)
 
     def train(self, mode: bool = True):
         nn.Embedding.train(self, mode)
@@ -367,7 +367,7 @@ class LoRAEmbedding(nn.Embedding, LoRALayer):
             self.merged = False
 
     def eval(self):
-        nn.Linear.eval(self)
+        self.eval()
         if self.merge_weights and not self.merged:
             # Merge the weights and mark it
             if self.r > 0:
@@ -387,7 +387,7 @@ class LoRAEmbedding(nn.Embedding, LoRALayer):
                     self.scale_grad_by_freq,
                     self.sparse,
                 )
-                result += (after_A @ self.lora_B.T) * self.scaling
+                result += torch.matmul(after_A, self.lora_B.T) * self.scaling
             return result
         else:
             return nn.Embedding.forward(self, x)

@@ -343,7 +343,7 @@ class RayHpoExecutor(HpoExecutor):
         self.hyperparameter_tune_kwargs = copy.deepcopy(hyperparameter_tune_kwargs)
 
     def validate_search_space(self, search_space, model_name):
-        from ray.tune.search.sample import Domain
+        from ray.tune.sample import Domain
 
         if not any(isinstance(search_space[hyperparam], (space.Space, Domain)) for hyperparam in search_space):
             logger.warning(
@@ -412,6 +412,7 @@ class RayHpoExecutor(HpoExecutor):
             hyperparameter_tune_kwargs=self.hyperparameter_tune_kwargs,
             metric="validation_performance",
             mode="max",
+        )
             save_dir=directory,
             ray_tune_adapter=RayTuneAdapterFactory.get_adapter(adapter_type)(),
             trainable_is_parallel=trainable_is_parallel,

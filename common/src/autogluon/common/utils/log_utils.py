@@ -118,6 +118,8 @@ def fix_logging_if_kaggle():
     This function checks if we are in a Kaggle notebook, and if so adds a StreamHandler to AutoGluon's logger to ensure logs are shown.
     """
     global __FIXED_KAGGLE_LOGGING
+    __FIXED_KAGGLE_LOGGING = False
+
     if (not __FIXED_KAGGLE_LOGGING) and _check_if_kaggle():
         _add_stream_handler()
     # After the fix is performed, or it is determined we are not in Kaggle, no need to fix again.

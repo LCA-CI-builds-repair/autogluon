@@ -38,15 +38,14 @@ def pytest_collection_modifyitems(config, items):
     skip_pyodide = pytest.mark.skip(reason="need --runpyodide option to run")
     custom_markers = dict(slow=skip_slow, regression=skip_regression, pyodide=skip_pyodide)
     if config.getoption("--runslow"):
-        # --runslow given in cli: do not skip slow tests
+        # Remove the "slow" custom marker if --runslow is given in CLI
         custom_markers.pop("slow", None)
     if config.getoption("--runregression"):
-        # --runregression given in cli: do not skip slow tests
+        # Remove the "regression" custom marker if --runregression is given in CLI
         custom_markers.pop("regression", None)
     if config.getoption("--runpyodide"):
-        # --runpyodide given in cli: do not skip pyodide tests
+        # Remove the "pyodide" custom marker if --runpyodide is given in CLI
         custom_markers.pop("pyodide", None)
-
     for item in items:
         for marker in custom_markers:
             if marker in item.keywords:

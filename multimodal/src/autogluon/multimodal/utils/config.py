@@ -425,6 +425,7 @@ def upgrade_config(config, loaded_version):
         if OmegaConf.select(config, "model.timm_image") is not None:
             logger.warning(
                 "Loading a model that has been trained via AutoGluon Multimodal<=0.6.2. "
+            )
                 "Setting config.model.timm_image.image_size = None."
             )
             config.model.timm_image.image_size = None

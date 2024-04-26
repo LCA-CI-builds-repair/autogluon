@@ -72,7 +72,6 @@ def test_text_ngram_feature_generator_categorical_nan(generator_helper, data_hel
     )
 
     toy_vectorizer = CountVectorizer(min_df=2, ngram_range=(1, 3), max_features=1000, dtype=np.uint8)
-
     # max_memory_ratio=None in test to avoid CI reducing ngrams non-deterministically.
     generator = TextNgramFeatureGenerator(max_memory_ratio=None, vectorizer=toy_vectorizer)
 
