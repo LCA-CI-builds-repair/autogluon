@@ -486,7 +486,7 @@ def inject_adaptation_to_linear_layer(
 ) -> nn.Module:
     """
     Injects trainable adatio Low-Rank decomposition matrices (LoRA) into linear
-    layers of a PyTorch model. Used for efficient fine-tuning of large
+    layers of a PyTorch model. Used for efficient fine-tuning of large models.
     pre-trained models.
 
     Parameters
