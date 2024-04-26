@@ -151,9 +151,9 @@ def mousover_plot(
         attr_y (str): name of column in dataframe whose values are shown on y-axis (eg. 'validation performance'). Must be numeric values.
         attr_size (str): name of column in dataframe whose values determine size of dots (eg. 'memory consumption'). Must be numeric values.
         attr_color (str): name of column in dataframe whose values determine color of dots  (eg. one of the hyperparameters). Can be categorical or numeric values
-        point_labels (list): list of strings describing the label for each dot (must be in same order as rows of dataframe)
-        save_file (str): where to save plot to (html) file (if None, plot is not saved)
-        plot_title (str): Title of plot and html file
+        point_labels (list): list of strings describing the label for each dot (must be in the same order as rows of the dataframe)
+        save_file (str): where to save the plot to (html) file (if None, the plot is not saved)
+        plot_title (str): Title of the plot and html file
         point_transparency (float): alpha value of points, lower = more transparent
         point_size (int): size of points, higher = larger
         hidden keys (list[str]): which keys of datadict NOT to show labels for.

@@ -130,11 +130,11 @@ def select_model(
                 delattr(config.model, model_name)
 
     if len(selected_model_names) == 0:
-        raise ValueError("No model is available for this dataset.")
-    # only allow no more than 1 fusion model
-    if len(fusion_model_name) > 1:
-        raise ValueError(f"More than one fusion models `{fusion_model_name}` are detected, but only one is allowed.")
-
+        raise ValueError("No fusion model is available for this dataset.")
+    # only allow exactly 1 fusion model
+    if len(fusion_model_name) != 1:
+        raise ValueError(f"Expected exactly one fusion model, but found {len(fusion_model_name)} fusion models: {fusion_model_name}")
+    
     if len(selected_model_names) > 1:
         assert len(fusion_model_name) == 1
         selected_model_names.extend(fusion_model_name)

@@ -866,8 +866,8 @@ class AbstractTrainer:
     def _construct_model_pred_order_with_pred_dict(self, models: List[str], models_to_ignore: List[str] = None) -> List[str]:
         """
         Constructs a list of model names in order of inference calls required to infer on all the models.
-        Unlike `_construct_model_pred_order`, this method's output is in undefined order when multiple models are valid to infer at the same time.
-            This makes it unsuitable for cascade ensembles.
+        Unlike `_construct_model_pred_order`, this method's output is in undefined order when multiple models are valid to infer at the same time,
+        making it unsuitable for cascade ensembles.
 
         Parameters
         ----------

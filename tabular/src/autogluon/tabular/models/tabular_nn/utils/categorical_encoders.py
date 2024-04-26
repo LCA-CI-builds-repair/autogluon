@@ -332,7 +332,6 @@ class OneHotMergeRaresHandleUnknownEncoder(_BaseEncoder):
           numeric values.
 
         The used categories can be found in the ``categories_`` attribute.
-
     drop : 'first' or a list/array of shape (n_features,), default=None.
         Specifies a methodology to use to drop one of the categories per
         feature. This is useful in situations where perfectly collinear
@@ -667,13 +666,12 @@ class OrdinalMergeRaresHandleUnknownEncoder(_BaseEncoder):
     a single column of integers (0 to n_categories - 1) per feature.
 
     Read more in the :ref:`User Guide <preprocessing_categorical_features>`.
+    Read more in the :ref:`User Guide <preprocessing_categorical_features>`.
 
     Parameters
     ----------
     categories : 'auto' or a list of lists/arrays of values.
         Categories (unique values) per feature:
-
-        - 'auto' : Determine categories automatically from the training data.
         - list : ``categories[i]`` holds the categories expected in the ith
           column. The passed categories should not mix strings and numeric
           values, and should be sorted in case of numeric values.
