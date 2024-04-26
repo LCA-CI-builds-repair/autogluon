@@ -402,8 +402,6 @@ class RayHpoExecutor(HpoExecutor):
         """
         from .ray_hpo import RayTuneAdapterFactory, run
 
-        # Disable tensorboard logging to avoid layer warning
-        # TODO: remove this when ray tune fix ray tune pass tuple to hyperopt issue
         os.environ["TUNE_DISABLE_AUTO_CALLBACK_LOGGERS"] = "1"
         analysis = run(
             trainable=model_trial,
@@ -412,7 +410,8 @@ class RayHpoExecutor(HpoExecutor):
             hyperparameter_tune_kwargs=self.hyperparameter_tune_kwargs,
             metric="validation_performance",
             mode="max",
-            save_dir=directory,
+            save_dir=directory
+        )
             ray_tune_adapter=RayTuneAdapterFactory.get_adapter(adapter_type)(),
             trainable_is_parallel=trainable_is_parallel,
             total_resources=self.resources,

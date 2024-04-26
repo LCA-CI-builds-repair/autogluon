@@ -268,7 +268,6 @@ def test_auto_ml_pipeline_feature_generator_duplicates_without_dedupe(generator_
     input_data = data_helper.generate_duplicate()
 
     toy_vectorizer = CountVectorizer(min_df=2, ngram_range=(1, 3), max_features=1000, dtype=np.uint8)
-
     with pytest.raises(KeyError):
         # generators is an invalid argument
         AutoMLPipelineFeatureGenerator(generators=[], vectorizer=toy_vectorizer, post_drop_duplicates=False)
