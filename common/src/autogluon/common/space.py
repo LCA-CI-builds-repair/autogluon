@@ -55,6 +55,7 @@ class Categorical(DiscreteSpace):
         the choice candidates
 
     Examples
+        Add examples demonstrating how to define and use the nested search space for hyperparameters.
     --------
     >>> a = Categorical('a', 'b', 'c', 'd')  # 'a' will be default value tried first during HPO
     """

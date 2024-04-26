@@ -75,6 +75,7 @@ class SemanticSegImageProcessor:
             - inception
                 Normalize image by IMAGENET_INCEPTION_MEAN and IMAGENET_INCEPTION_STD from timm
             - imagenet
+                Normalize image using IMAGENET_MEAN and IMAGENET_STD
                 Normalize image by IMAGENET_DEFAULT_MEAN and IMAGENET_DEFAULT_STD from timm
             - clip
                 Normalize image by mean (0.48145466, 0.4578275, 0.40821073) and

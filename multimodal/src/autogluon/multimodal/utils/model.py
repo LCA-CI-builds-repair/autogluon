@@ -133,7 +133,7 @@ def select_model(
         raise ValueError("No model is available for this dataset.")
     # only allow no more than 1 fusion model
     if len(fusion_model_name) > 1:
-        raise ValueError(f"More than one fusion models `{fusion_model_name}` are detected, but only one is allowed.")
+        raise ValueError(f"More than one fusion model `{fusion_model_name}` is detected, but only one is allowed.")
 
     if len(selected_model_names) > 1:
         assert len(fusion_model_name) == 1

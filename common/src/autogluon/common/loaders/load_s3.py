@@ -40,6 +40,7 @@ def list_bucket_prefix_suffix_contains_s3(
     bucket: str,
     prefix: str,
     suffix: Optional[Union[str, List[str]]] = None,
+    exclude: Optional[Union[str, List[str]]] = None,
     exclude_suffix: Optional[Union[str, List[str]]] = None,
     contains: Optional[Union[str, List[str]]] = None,
     exclude_contains: Optional[Union[str, List[str]]] = None,

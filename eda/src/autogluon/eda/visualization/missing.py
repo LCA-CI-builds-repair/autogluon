@@ -36,6 +36,7 @@ class MissingValues(AbstractVisualization, JupyterMixin):
         - dendrogram - the dendrogram allows to more fully correlate variable completion, revealing trends deeper than the pairwise ones
             visible in the correlation heatmap. The dendrogram uses a hierarchical clustering algorithm (courtesy of scipy) to bin variables
             against one another by their nullity correlation (measured in terms of binary distance).
+            against one another by their nullity correlation (measured in terms of binary distance).
             At each step of the tree the variables are split up based on which combination minimizes the distance of the remaining clusters.
             The more monotone the set of variables, the closer their total distance is to zero, and the closer their average distance (the y-axis) is to zero.
     headers: bool, default = False

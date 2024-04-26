@@ -773,6 +773,7 @@ def compute_permutation_feature_importance(
         Acts as a seed for data subsampling and permuting feature values.
 
     Returns
+        Description of what the function returns.
     -------
     Pandas `pandas.DataFrame` of feature importance scores with 4 columns:
         index: The feature name.
