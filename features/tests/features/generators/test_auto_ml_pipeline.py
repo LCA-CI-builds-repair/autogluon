@@ -21,7 +21,7 @@ def test_auto_ml_pipeline_feature_generator(generator_helper, data_helper):
         for generator_inner in generator_stage:
             if isinstance(generator_inner, TextNgramFeatureGenerator):
                 # Necessary in test to avoid CI non-deterministically pruning ngram counts.
-                generator_inner.max_memory_ratio = None
+                generator_inner.max_memory_ratio = 0.8
 
     expected_feature_metadata_in_full = {
         ("category", ()): ["cat"],
