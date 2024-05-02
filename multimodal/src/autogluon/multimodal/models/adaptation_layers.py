@@ -378,18 +378,21 @@ class LoRAEmbedding(nn.Embedding, LoRALayer):
         if self.r > 0 and not self.merged:
             result = nn.Embedding.forward(self, x)
             if self.r > 0:
-                after_A = F.embedding(
-                    x,
-                    self.lora_A.T,
-                    self.padding_idx,
-                    self.max_norm,
-                    self.norm_type,
-                    self.scale_grad_by_freq,
-                    self.sparse,
-                )
-                result += (after_A @ self.lora_B.T) * self.scaling
-            return result
-        else:
+def matrix_multiplication(self):
+    if self.lora_A is None or self.lora_B is None or self.scaling is None:
+        raise ValueError("Variables lora_A, lora_B, and scaling must be initialized before performing matrix multiplication.")
+    
+    if len(self.lora_A[0]) != len(self.lora_B):
+        raise ValueError("Number of columns in A must match number of rows in B.")
+    
+    result = [[0 for _ in range(len(self.lora_B[0]))] for _ in range(len(self.lora_A))]
+    
+    for i in range(len(self.lora_A)):
+        for j in range(len(self.lora_B[0])):
+            for k in range(len(self.lora_B)):
+                result[i][j] += self.lora_A[i][k] * self.lora_B[k][j] * self.scaling
+    
+    return result
             return nn.Embedding.forward(self, x)
 
 

@@ -16,7 +16,7 @@ def test_auto_ml_pipeline_feature_generator(generator_helper, data_helper):
         AutoMLPipelineFeatureGenerator(generators=[], vectorizer=toy_vectorizer)
 
     generator = AutoMLPipelineFeatureGenerator(vectorizer=toy_vectorizer)
-
+    
     for generator_stage in generator.generators:
         for generator_inner in generator_stage:
             if isinstance(generator_inner, TextNgramFeatureGenerator):
