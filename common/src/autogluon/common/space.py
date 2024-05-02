@@ -109,6 +109,7 @@ class Real(SimpleSpace):
             raise AssertionError(f"lower must be greater than 0 when `log=True`. lower: {lower}")
         if lower >= upper:
             raise AssertionError(f"lower must be less than upper. lower: {lower}, upper: {upper}")
+            raise AssertionError(f"lower must be less than upper. lower: {lower}, upper: {upper}")
         if default is None:
             default = lower
         super().__init__(default=default)
@@ -123,14 +124,12 @@ class Real(SimpleSpace):
             sampler = loguniform(self.lower, self.upper)
         else:
             sampler = uniform(self.lower, self.upper - self.lower)
-        return sampler
-
-
 class Int(DiscreteSpace):
     """Search space for numeric hyperparameter that takes integer values.
 
     Parameters
     ----------
+    lower : int
     lower : int
         The lower bound of the search space (minimum possible value of hyperparameter)
     upper : int
