@@ -459,16 +459,7 @@ def create_adaptation(efficient_finetune: str, layer: nn.Module, lora_r: int, lo
     -------
     Model with injected LoRA modules.
     """
-    if "ia3_lora" in efficient_finetune:
-        return IA3LoRALinear(
-            layer.in_features, layer.out_features, r=lora_r, lora_alpha=lora_alpha, merge_weights=False
         )
-    elif "ia3" in efficient_finetune:
-        return IA3Linear(layer.in_features, layer.out_features, merge_weights=False)
-    elif "lora" in efficient_finetune:
-        return LoRALinear(layer.in_features, layer.out_features, r=lora_r, lora_alpha=lora_alpha, merge_weights=False)
-    elif efficient_finetune is not None and efficient_finetune != "None":
-        raise NotImplementedError(
             f"The efficient finetuning strategy '{efficient_finetune}'"
             f" is not supported. We only support"
             f" {', '.join(PEFT_STRATEGIES)}."
