@@ -53,7 +53,6 @@ class Categorical(DiscreteSpace):
     ----------
     data : Space or python built-in objects
         the choice candidates
-
     Examples
     --------
     >>> a = Categorical('a', 'b', 'c', 'd')  # 'a' will be default value tried first during HPO

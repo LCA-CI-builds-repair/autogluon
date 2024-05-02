@@ -749,13 +749,12 @@ class MAE(COD):
 COD_METRICS_NAMES = {"sm": SM(), "fm": FM(), "em": EM(), "mae": MAE()}
 
 
-# TODO: Modify multi-gpu evalution error. Maybe there will be a more elegant way.
+# TODO: Modify multi-gpu evaluation error. Maybe there will be a more elegant way.
 class Multiclass_IoU_Pred:
     """
     Compute the IoU for multi-class semantic segmentation based on https://github.com/xieenze/Trans2Seg/blob/master/segmentron/utils/score.py.
     The direct use of torchmetrics for large dataset will lead to issues such as high CPU usage or insufficient memory.
     """
-
     def __init__(self, num_classes):
         super().__init__()
         self.total_inter = torch.zeros(num_classes)
