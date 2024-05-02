@@ -352,14 +352,14 @@ class LoRAEmbedding(nn.Embedding, LoRALayer):
         self.reset_parameters()
 
     def reset_parameters(self):
-        nn.Embedding.reset_parameters(self)
+        super().reset_parameters()
         if hasattr(self, "lora_A"):
             # initialize A the same way as the default for nn.Linear and B to zero
             nn.init.zeros_(self.lora_A)
             nn.init.normal_(self.lora_B)
 
     def train(self, mode: bool = True):
-        nn.Embedding.train(self, mode)
+        super().train(mode)
         if self.merge_weights and self.merged:
             # Make sure that the weights are not merged
             if self.r > 0:
@@ -367,7 +367,7 @@ class LoRAEmbedding(nn.Embedding, LoRALayer):
             self.merged = False
 
     def eval(self):
-        nn.Linear.eval(self)
+        super().eval()
         if self.merge_weights and not self.merged:
             # Merge the weights and mark it
             if self.r > 0:

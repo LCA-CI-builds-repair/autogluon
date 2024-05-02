@@ -58,6 +58,8 @@ def infer_metrics(
 
     Parameters
     ----------
+    self
+        Instance of the class.
     problem_type
         Type of problem.
     eval_metric_name

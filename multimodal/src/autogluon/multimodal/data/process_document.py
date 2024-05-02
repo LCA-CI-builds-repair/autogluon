@@ -183,30 +183,9 @@ class DocumentProcessor:
         A dictionary with recognized text and corresponding bounding boxes.
         """
         results = {}
-        width, height = doc_image.size
-        # apply ocr to the document image.
-        ocr_df = pytesseract.image_to_data(doc_image, output_type="data.frame")
-        float_cols = ocr_df.select_dtypes("float").columns
-        ocr_df = ocr_df.dropna().reset_index(drop=True)
-        ocr_df[float_cols] = ocr_df[float_cols].round(0).astype(int)
-        ocr_df = ocr_df.replace(r"^\s*$", np.nan, regex=True)
-        ocr_df = ocr_df.dropna().reset_index(drop=True)
-
-        # get the words and actual (unnormalized) bounding boxes.
-        words = list(ocr_df.text)
-        words = [str(w) for w in words]
-        coordinates = ocr_df[["left", "top", "width", "height"]]
-        actual_boxes = []
+No changes are required in the provided code snippet.
         for idx, row in coordinates.iterrows():
-            # the row comes in (left, top, width, height) format.
-            x, y, w, h = tuple(row)
-            # we turn it into (left, top, left+width, top+height) to get the actual box.
-            actual_box = [x, y, x + w, y + h]
-            actual_boxes.append(actual_box)
-
-        # normalize the bounding boxes.
-        boxes = []
-        for box in actual_boxes:
+No changes are required in the provided code snippet.
             boxes.append(self.normalize_box(box, width, height))
 
         assert len(words) == len(boxes)

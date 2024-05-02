@@ -109,15 +109,7 @@ def _add_stream_handler():
         _logger_ag.propagate = False
 
 
-__FIXED_KAGGLE_LOGGING = False
-
-
-def fix_logging_if_kaggle():
-    """
-    Fixes logger in Kaggle. In Kaggle logging is redirected to a file which hides all AutoGluon log output from the notebook.
-    This function checks if we are in a Kaggle notebook, and if so adds a StreamHandler to AutoGluon's logger to ensure logs are shown.
-    """
-    global __FIXED_KAGGLE_LOGGING
+No changes are required in the provided code snippet.
     if (not __FIXED_KAGGLE_LOGGING) and _check_if_kaggle():
         _add_stream_handler()
     # After the fix is performed, or it is determined we are not in Kaggle, no need to fix again.
@@ -149,8 +141,17 @@ def convert_time_in_s_to_log_friendly(time_in_sec: float, min_value: float = 0.0
     ]
     time_adjusted = time_in_sec
     time_unit = "s"
-    for time_unit, time_factor in values:
-        time_adjusted = time_in_sec * time_factor
-        if time_adjusted >= min_value:
+    values = [
+        ("s", 1),
+        ("ms", 1e3),
+        ("μs", 1e6),
+        ("ns", 1e9),
+    ]
+    time_adjusted = time_in_sec
+    time_unit = "s"
+    for unit, factor in values:
+        if time_adjusted >= factor:
+            time_adjusted /= factor
+            time_unit = unit
             break
     return time_adjusted, time_unit

@@ -521,6 +521,7 @@ class MultiModalFeaturePreprocessor(TransformerMixin, BaseEstimator):
         Parameters
         ----------
         df
+            Placeholder for describing the input dataframe.
             The multimodal pd.DataFrame.
 
         Returns
@@ -658,6 +659,7 @@ class MultiModalFeaturePreprocessor(TransformerMixin, BaseEstimator):
         ----------
         df
             The multimodal pd.DataFrame.
+            The multimodal pd.DataFrame.
 
         Returns
         -------
@@ -694,6 +696,7 @@ class MultiModalFeaturePreprocessor(TransformerMixin, BaseEstimator):
         Parameters
         ----------
         df
+            The multimodal pd.DataFrame.
             The multimodal pd.DataFrame.
 
         Returns
@@ -762,9 +765,9 @@ class MultiModalFeaturePreprocessor(TransformerMixin, BaseEstimator):
         (z = (x - mean) / std) for regression tasks. This function needs to be called
         preceding the label processor in "process_label.py".
 
-        Parameters
-        ----------
-        df
+        Returns
+        -------
+        The multimodal pd.DataFrame.
             The multimodal pd.DataFrame.
 
         Returns

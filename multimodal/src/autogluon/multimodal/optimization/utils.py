@@ -840,9 +840,6 @@ def gather_column_features(
                     else:  # this column's feature is independent of other columns'
                         gathered_features.append(per_model_output[COLUMN_FEATURES][FEATURES][col_name])
                         # logger.debug(f"col_name {col_name} has an independent feature in model: {per_model_name}")
-
-            # two or more columns share one cls feature, and no other columns share it.
-            if len(columns_share_one_feature) > 0:
                 assert len("_".join(columns_share_one_feature)) == len(
                     feature_name
                 ), f"model `{per_model_name}`'s cls feature name `{feature_name}` doesn't match `{columns_share_one_feature}`"

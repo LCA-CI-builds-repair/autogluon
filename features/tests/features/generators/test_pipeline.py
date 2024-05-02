@@ -141,13 +141,12 @@ def test_pipeline_feature_generator_removal_advanced(generator_helper, data_help
                 DatetimeFeatureGenerator(),
                 TextSpecialFeatureGenerator(),
                 text_ngram_feature_generator,
+                IdentityFeatureGenerator(infer_features_in_args=dict(valid_raw_types=[R_CATEGORY])),
             ],
-            [IdentityFeatureGenerator(infer_features_in_args=dict(valid_raw_types=[R_CATEGORY]))],
-        ]
+        )
     )
 
     expected_feature_metadata_in_full = {("category", ()): ["cat"], ("object", ()): ["obj"]}
-
     expected_feature_metadata_full = {("category", ()): ["obj", "cat"]}
 
     expected_feature_metadata_in_unused_full = {

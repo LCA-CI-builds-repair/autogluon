@@ -426,7 +426,6 @@ class RayHpoExecutor(HpoExecutor):
         )
         os.environ.pop("TUNE_DISABLE_AUTO_CALLBACK_LOGGERS", None)
         self.analysis = analysis
-
     def report(self, reporter, **kwargs):
         from ray.air import session
 

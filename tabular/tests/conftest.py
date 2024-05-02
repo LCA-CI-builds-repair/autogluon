@@ -46,6 +46,7 @@ def pytest_collection_modifyitems(config, items):
     if config.getoption("--runpyodide"):
         # --runpyodide given in cli: do not skip pyodide tests
         custom_markers.pop("pyodide", None)
+        custom_markers.pop("pyodide", None)
 
     for item in items:
         for marker in custom_markers:
