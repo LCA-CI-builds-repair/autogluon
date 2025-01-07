@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
 import numpy as np
+import sys
 import torch
 import torchmetrics
 from scipy.ndimage import convolve
@@ -8,6 +9,8 @@ from scipy.ndimage import distance_transform_edt as bwdist
 
 _EPS = np.spacing(1)  # the different implementation of epsilon (extreme min value) between numpy and matlab
 _TYPE = np.float64
+MAX_ATTEMPTS = 3
+
 
 
 def _prepare_data(pred: np.ndarray, gt: np.ndarray) -> tuple:
@@ -26,6 +29,19 @@ def _prepare_data(pred: np.ndarray, gt: np.ndarray) -> tuple:
         pred = (pred - pred.min()) / (pred.max() - pred.min())
     return pred, gt
 
+
+def _get_valid_input(prompt: str) -> (float, float):
+    attempts = 0
+    while attempts < MAX_ATTEMPTS:
+        try:
+            x, y = map(float, input(prompt).split())
+            return x, y
+        except (ValueError, TypeError):
+            attempts += 1
+            if attempts == MAX_ATTEMPTS:
+                print(f"Failed after {MAX_ATTEMPTS} attempts")
+                sys.exit(1)
+            print(f"Error: Invalid input. Try again.")
 
 def _get_adaptive_threshold(matrix: np.ndarray, max_value: float = 1) -> float:
     """
