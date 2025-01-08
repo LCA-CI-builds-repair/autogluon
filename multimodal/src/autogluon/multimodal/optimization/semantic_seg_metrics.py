@@ -71,7 +71,7 @@ class Fmeasure(object):
 
     def cal_adaptive_fm(self, pred: np.ndarray, gt: np.ndarray) -> float:
         """
-        Calculate the adaptive F-measure.
+        Calculate the adaptive evaluation F-measure.
         :return: adaptive_fm
         """
         # ``np.count_nonzero`` is faster and better
