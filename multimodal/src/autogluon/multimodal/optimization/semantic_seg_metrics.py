@@ -174,7 +174,7 @@ class Smeasure(object):
         S-measure(Structure-measure) of SOD.
         ::
             @inproceedings{Smeasure,
-                title={Structure-measure: A new way to eval foreground maps},
+                title={Structure-measure: A new way to evaluate foreground maps},
                 author={Fan, Deng-Ping and Cheng, Ming-Ming and Liu, Yun and Li, Tao and Borji, Ali},
                 booktitle=ICCV,
                 pages={4548--4557},
