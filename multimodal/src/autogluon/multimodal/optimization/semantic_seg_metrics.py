@@ -590,6 +590,24 @@ class Multiclass_IoU(torchmetrics.Metric):
         self.total_union += union
 
     def compute(self):
+        iou = self.total_inter.to(torch.float) / (self.total_union.to(torch.float) + 1e-6)
+        iou_mean = (iou[torch.logical_and(self.total_union > 0, torch.isfinite(iou))]).mean()
+        return {'iou': iou, 'iou_mean': iou_mean}
+
+    @staticmethod
+    def batch_intersection_union(logits, labels):
+        output = torch.softmax(logits, dim=1)
+        pred = torch.argmax(output, dim=1)
+        pred = pred.detach().squeeze(1).cpu().numpy()
+        labels = labels.detach().squeeze(1).cpu().numpy()
+
+        intersection = pred * (pred == labels)
+        area_inter, _ = np.histogram(intersection, bins=logits.shape[1], range=(1, logits.shape[1]))
+        area_pred, _ = np.histogram(pred, bins=logits.shape[1], range=(1, logits.shape[1]))
+        area_label, _ = np.histogram(labels, bins=logits.shape[1], range=(1, logits.shape[1]))
+        area_union = area_pred + area_label - area_inter
+
+        return torch.from_numpy(area_inter), torch.from_numpy(area_union)(self):
         IoU = 1.0 * self.total_inter / (2.220446049250313e-16 + self.total_union)
         return torch.tensor(IoU.mean().item())
 
