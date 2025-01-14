@@ -573,7 +573,7 @@ class WeightedFmeasure(object):
 
 
 class Multiclass_IoU(torchmetrics.Metric):
-    """
+    r"""
     Compute the IoU for multi-class semantic segmentation based on https://github.com/xieenze/Trans2Seg/blob/master/segmentron/utils/score.py.
     The direct use of torchmetrics for large dataset will lead to issues such as high CPU usage or insufficient memory.
     """
@@ -583,7 +583,7 @@ class Multiclass_IoU(torchmetrics.Metric):
         self.add_state("total_inter", default=torch.zeros(num_classes), dist_reduce_fx=None)
         self.add_state("total_union", default=torch.zeros(num_classes), dist_reduce_fx=None)
         self.num_classes = num_classes
-
+        
     def update(self, logits, labels):
         inter, union = self.batch_intersection_union(logits, labels)
         self.total_inter += inter
