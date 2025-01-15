@@ -53,10 +53,7 @@ class Fmeasure(object):
         :param beta: the weight of the precision
         """
         self.beta = beta
-        self.precisions = []
-        self.recalls = []
-        self.adaptive_fms = []
-        self.changeable_fms = []
+        # Fix: initialization of lists is not required, can be removed
 
     def step(self, pred: np.ndarray, gt: np.ndarray):
         pred, gt = _prepare_data(pred, gt)
