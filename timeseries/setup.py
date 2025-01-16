@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 import importlib.util
 
-###########################
+############################# Implementation notes
 # This code block is a HACK (!), but is necessary to avoid code duplication. Do NOT alter these lines.
 import os
 
