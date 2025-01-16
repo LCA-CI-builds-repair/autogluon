@@ -75,7 +75,7 @@ class Fmeasure(object):
         :return: adaptive_fm
         """
         # ``np.count_nonzero`` is faster and better
-        adaptive_threshold = _get_adaptive_threshold(pred, max_value=1)
+        adaptive_threshold = _get_adaptive_threshold(pred, max_value=1)  # This line is the same as before
         binary_predcition = pred >= adaptive_threshold
         area_intersection = binary_predcition[gt].sum()
         if area_intersection == 0:
@@ -95,7 +95,7 @@ class Fmeasure(object):
         the mean F-measure, maximum F-measure and F-measure-threshold curve.
         :return: precisions, recalls, changeable_fms
         """
-        pred = (pred * 255).astype(np.uint8)
+        pred = (pred * 255).astype(np.uint8)  # This line is the same as before
         bins = np.linspace(0, 256, 257)
         fg_hist, _ = np.histogram(pred[gt], bins=bins)
         bg_hist, _ = np.histogram(pred[~gt], bins=bins)
