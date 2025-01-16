@@ -210,8 +210,8 @@ class Smeasure(object):
         """
         Calculate the object score.
         """
-        fg = pred * gt
-        bg = (1 - pred) * (1 - gt)
+        fg = pred[gt]
+        bg = pred[~gt]
         u = np.mean(gt)
         object_score = u * self.s_object(fg, gt) + (1 - u) * self.s_object(bg, 1 - gt)
         return object_score
@@ -251,12 +251,12 @@ class Smeasure(object):
         h, w = matrix.shape
         area_object = np.count_nonzero(matrix)
         if area_object == 0:
-            x = np.round(w / 2)
-            y = np.round(h / 2)
+            cx = np.round(w / 2)
+            cy = np.round(h / 2)
         else:
             # More details can be found at: https://www.yuque.com/lart/blog/gpbigm
-            y, x = np.argwhere(matrix).mean(axis=0).round()
-        return int(x) + 1, int(y) + 1
+            cy, cx = np.argwhere(matrix).mean(axis=0).round()
+        return int(cx) + 1, int(cy) + 1
 
     def divide_with_xy(self, pred: np.ndarray, gt: np.ndarray, x: int, y: int) -> dict:
         """
@@ -265,21 +265,19 @@ class Smeasure(object):
         h, w = gt.shape
         area = h * w
 
-        gt_LT = gt[0:y, 0:x]
-        gt_RT = gt[0:y, x:w]
-        gt_LB = gt[y:h, 0:x]
-        gt_RB = gt[y:h, x:w]
+        gt_LT = gt[:y, :x]
+        gt_RT = gt[:y, x:]
+        gt_LB = gt[y:, :x]
+        gt_RB = gt[y:, x:]
 
-        pred_LT = pred[0:y, 0:x]
-        pred_RT = pred[0:y, x:w]
-        pred_LB = pred[y:h, 0:x]
-        pred_RB = pred[y:h, x:w]
-
+        pred_LT = pred[:y, :x]
+        pred_RT = pred[:y, x:]
+        pred_LB = pred[y:, :x]
+        pred_RB = pred[y:, x:]
         w1 = x * y / area
         w2 = y * (w - x) / area
         w3 = (h - y) * x / area
         w4 = 1 - w1 - w2 - w3
-
         return dict(
             gt=(gt_LT, gt_RT, gt_LB, gt_RB),
             pred=(pred_LT, pred_RT, pred_LB, pred_RB),
