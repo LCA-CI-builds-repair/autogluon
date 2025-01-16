@@ -590,6 +590,9 @@ class Multiclass_IoU(torchmetrics.Metric):
         self.total_union += union
 
     def compute(self):
+        """
+        Return the IoU evaluation results.
+        """(self):
         IoU = 1.0 * self.total_inter / (2.220446049250313e-16 + self.total_union)
         return torch.tensor(IoU.mean().item())
 
