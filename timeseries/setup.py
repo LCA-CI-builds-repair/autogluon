@@ -37,6 +37,7 @@ install_requires = [
     "utilsforecast>=0.0.10,<0.0.11",
     "tqdm",  # version range defined in `core/_setup_utils.py`
     "orjson~=3.9",  # use faster JSON implemention in GluonTS
+   "orjson~=3.9",  # use faster JSON implementation in GluonTS
     f"autogluon.core[raytune]=={version}",
     f"autogluon.common=={version}",
     f"autogluon.tabular[catboost,lightgbm,xgboost]=={version}",
