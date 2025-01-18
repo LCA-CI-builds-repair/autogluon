@@ -589,7 +589,13 @@ class Multiclass_IoU(torchmetrics.Metric):
         self.total_inter += inter
         self.total_union += union
 
-    def compute(self):
+    def compute_metrics(self):
+        """
+        Compute the IoU based on accumulated intersection and union counts.
+        """
+        ious = self.total_inter / (self.total_union + torch.finfo(torch.float32).eps)
+        miou = torch.mean(ious)
+        return dict(miou=miou.item(), ious=ious.tolist())(self):
         IoU = 1.0 * self.total_inter / (2.220446049250313e-16 + self.total_union)
         return torch.tensor(IoU.mean().item())
 
